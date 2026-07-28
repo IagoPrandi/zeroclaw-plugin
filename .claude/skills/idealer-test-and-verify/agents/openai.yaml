@@ -1,0 +1,4 @@
+interface:
+  display_name: "Idealer Test & Verify"
+  short_description: "Verify changes correctly across the idealer monorepo."
+  default_prompt: "Verify my changes correctly before marking anything done."
