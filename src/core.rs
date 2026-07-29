@@ -744,14 +744,14 @@ mod tests {
         let report = super::analyze_contract(&input, &valid_test_config());
         assert!(report.is_ok());
         let value = serde_json::to_value(report.unwrap_or_else(|_| unreachable!()));
-        assert_eq!(
-            value.as_ref().ok().and_then(|v| v.get("decision")),
-            Some(&serde_json::json!("block"))
-        );
-        assert_eq!(
-            value.as_ref().ok().and_then(|v| v.get("analysis_complete")),
-            Some(&serde_json::json!(false))
-        );
+        let projection = serde_json::json!({
+            "decision": value.as_ref().ok().and_then(|v| v.get("decision")),
+            "analysis_complete": value.as_ref().ok().and_then(|v| v.get("analysis_complete"))
+        });
+        let expected: serde_json::Value =
+            serde_json::from_str(include_str!("../tests/golden/fail_closed_empty.json"))
+                .unwrap_or_else(|_| unreachable!());
+        assert_eq!(projection, expected);
     }
 
     #[test]

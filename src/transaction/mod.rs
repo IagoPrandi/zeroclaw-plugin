@@ -361,9 +361,9 @@ mod tests {
 
     use super::{
         ALT_META_SIZE, AccountKeySource, DecodedLookupTable, TransactionVersion,
-        decode_lookup_table, normalize_wire,
+        decode_lookup_table, normalize_base64, normalize_wire,
     };
-    use crate::{address::Address32, limits::Limits};
+    use crate::{address::Address32, error::GuardianError, limits::Limits};
 
     fn limits() -> Limits {
         Limits {
@@ -503,6 +503,102 @@ mod tests {
                 active: true
             })
         );
+    }
+
+    #[test]
+    fn rejects_invalid_base64_and_encoded_or_decoded_oversize() {
+        assert_eq!(
+            normalize_base64("***", &limits(), &HashMap::new()),
+            Err(GuardianError::Base64Decode)
+        );
+
+        let mut tiny_limits = limits();
+        tiny_limits.max_transaction_bytes = 1;
+        assert_eq!(
+            normalize_base64("AAAA", &tiny_limits, &HashMap::new()),
+            Err(GuardianError::TransactionTooLarge)
+        );
+        assert_eq!(
+            normalize_wire(&[0, 1], &tiny_limits, &HashMap::new()),
+            Err(GuardianError::TransactionTooLarge)
+        );
+    }
+
+    #[test]
+    fn rejects_signature_count_and_account_index_mismatches() {
+        let base_message = Message {
+            header: header(),
+            account_keys: vec![
+                solana_message::Address::new_from_array([1; 32]),
+                solana_message::Address::new_from_array([2; 32]),
+            ],
+            recent_blockhash: solana_message::Hash::default(),
+            instructions: vec![],
+        };
+        let signature_mismatch = bincode::serialize(&VersionedTransaction {
+            signatures: vec![],
+            message: VersionedMessage::Legacy(base_message.clone()),
+        })
+        .unwrap_or_default();
+        assert_eq!(
+            normalize_wire(&signature_mismatch, &limits(), &HashMap::new()),
+            Err(GuardianError::TransactionDeserialize)
+        );
+
+        let invalid_index = wire(VersionedMessage::Legacy(Message {
+            instructions: vec![CompiledInstruction {
+                program_id_index: 9,
+                accounts: vec![0],
+                data: vec![],
+            }],
+            ..base_message
+        }));
+        assert!(matches!(
+            normalize_wire(&invalid_index, &limits(), &HashMap::new()),
+            Err(GuardianError::TransactionDeserialize | GuardianError::InvalidAccountIndex)
+        ));
+    }
+
+    #[test]
+    fn rejects_malformed_inactive_and_out_of_range_lookup_tables() {
+        assert_eq!(
+            decode_lookup_table(&[0; ALT_META_SIZE]),
+            Err(GuardianError::AddressLookupTable)
+        );
+        let table_key = solana_message::Address::new_from_array([3; 32]);
+        let message = VersionedMessage::V0(v0::Message {
+            header: header(),
+            account_keys: vec![
+                solana_message::Address::new_from_array([1; 32]),
+                solana_message::Address::new_from_array([2; 32]),
+            ],
+            recent_blockhash: solana_message::Hash::default(),
+            instructions: vec![],
+            address_table_lookups: vec![v0::MessageAddressTableLookup {
+                account_key: table_key,
+                writable_indexes: vec![1],
+                readonly_indexes: vec![],
+            }],
+        });
+        let table_address = Address32::new(table_key.to_bytes());
+        for table in [
+            DecodedLookupTable {
+                addresses: vec![Address32::new([4; 32])],
+                last_extended_slot: 7,
+                active: true,
+            },
+            DecodedLookupTable {
+                addresses: vec![Address32::new([4; 32]), Address32::new([5; 32])],
+                last_extended_slot: 7,
+                active: false,
+            },
+        ] {
+            let tables = HashMap::from([(table_address, table)]);
+            assert_eq!(
+                normalize_wire(&wire(message.clone()), &limits(), &tables),
+                Err(GuardianError::AddressLookupTable)
+            );
+        }
     }
 
     proptest! {

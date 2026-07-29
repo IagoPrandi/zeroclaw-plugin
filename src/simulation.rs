@@ -12,6 +12,9 @@ use crate::{
     transaction::{NormalizedTransaction, ResolvedInstruction},
 };
 
+const MAX_LOG_LINES: usize = 1_000;
+const MAX_LOG_CHARS_PER_LINE: usize = 4_096;
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExecutionEffects {
     pub status: ExecutionStatus,
@@ -79,6 +82,7 @@ pub fn confirmed_effects(
         meta.get("postTokenBalances"),
         transaction,
     )?);
+    let (logs, logs_truncated) = bounded_logs(meta.get("logMessages"));
     Ok(ExecutionEffects {
         status: if failed {
             ExecutionStatus::ConfirmedFailed
@@ -87,8 +91,8 @@ pub fn confirmed_effects(
         },
         error: failed.then(|| compact_error(&error_value)),
         units_consumed: meta.get("computeUnitsConsumed").and_then(Value::as_u64),
-        logs: string_array(meta.get("logMessages")),
-        logs_truncated: false,
+        logs,
+        logs_truncated,
         inner_actions: decode_inner_instructions(meta.get("innerInstructions"), transaction)?,
         asset_deltas: deltas,
         fee_lamports: meta.get("fee").and_then(Value::as_u64),
@@ -114,6 +118,7 @@ pub fn simulation_effects(
     let value = result.get("value").unwrap_or(result);
     let error_value = value.get("err").cloned().unwrap_or(Value::Null);
     let failed = !error_value.is_null();
+    let (logs, logs_truncated) = bounded_logs(value.get("logs"));
     Ok(ExecutionEffects {
         status: if failed {
             ExecutionStatus::SimulationFailed
@@ -122,8 +127,8 @@ pub fn simulation_effects(
         },
         error: failed.then(|| compact_error(&error_value)),
         units_consumed: value.get("unitsConsumed").and_then(Value::as_u64),
-        logs: string_array(value.get("logs")),
-        logs_truncated: false,
+        logs,
+        logs_truncated,
         inner_actions: decode_inner_instructions(value.get("innerInstructions"), transaction)?,
         asset_deltas: Vec::new(),
         fee_lamports: None,
@@ -392,18 +397,25 @@ fn u64_array(object: &Value, key: &str) -> Result<Vec<u64>, GuardianError> {
         .collect()
 }
 
-fn string_array(value: Option<&Value>) -> Vec<String> {
-    value
-        .and_then(Value::as_array)
-        .map(|values| {
-            values
-                .iter()
-                .filter_map(Value::as_str)
-                .take(1_000)
-                .map(ToOwned::to_owned)
-                .collect()
-        })
-        .unwrap_or_default()
+fn bounded_logs(value: Option<&Value>) -> (Vec<String>, bool) {
+    let Some(values) = value.and_then(Value::as_array) else {
+        return (Vec::new(), false);
+    };
+    let mut truncated = values.len() > MAX_LOG_LINES;
+    let mut output = Vec::with_capacity(values.len().min(MAX_LOG_LINES));
+    for value in values.iter().take(MAX_LOG_LINES) {
+        let Some(line) = value.as_str() else {
+            truncated = true;
+            continue;
+        };
+        let mut characters = line.chars();
+        let bounded: String = characters.by_ref().take(MAX_LOG_CHARS_PER_LINE).collect();
+        if characters.next().is_some() {
+            truncated = true;
+        }
+        output.push(bounded);
+    }
+    (output, truncated)
 }
 
 fn parse_address(value: Option<&Value>) -> Result<Option<Address32>, GuardianError> {
@@ -426,8 +438,10 @@ mod tests {
     use solana_message::{Message, MessageHeader, VersionedMessage};
     use solana_transaction::versioned::VersionedTransaction;
 
-    use super::{confirmed_effects, priority_fee_lamports, simulation_effects};
-    use crate::{limits::Limits, transaction::normalize_wire};
+    use super::{confirmed_effects, has_durable_nonce, priority_fee_lamports, simulation_effects};
+    use crate::{
+        address::Address32, decoders::ActionData, limits::Limits, transaction::normalize_wire,
+    };
 
     fn transaction() -> crate::transaction::NormalizedTransaction {
         let wire = bincode::serialize(&VersionedTransaction {
@@ -511,6 +525,35 @@ mod tests {
     }
 
     #[test]
+    fn expired_blockhash_is_preserved_as_simulation_failure() {
+        let result = serde_json::json!({
+            "value": {"err":"BlockhashNotFound","logs":null,"innerInstructions":[]}
+        });
+        let effects =
+            simulation_effects(&result, &transaction()).unwrap_or_else(|_| unreachable!());
+        assert_eq!(
+            effects.status,
+            crate::output::ExecutionStatus::SimulationFailed
+        );
+        assert_eq!(effects.error.as_deref(), Some("\"BlockhashNotFound\""));
+        assert!(effects.logs.is_empty());
+    }
+
+    #[test]
+    fn durable_nonce_detection_is_explicit() {
+        let actions = [ActionData {
+            instruction_index: 0,
+            kind: "advance_nonce_account".to_owned(),
+            program_id: Address32::ZERO,
+            accounts: vec![],
+            details: std::collections::BTreeMap::new(),
+            known: true,
+        }];
+        assert!(has_durable_nonce(&actions));
+        assert!(!has_durable_nonce(&[]));
+    }
+
+    #[test]
     fn captures_bounded_return_data_evidence() {
         let tx = transaction();
         let result = serde_json::json!({
@@ -577,5 +620,38 @@ mod tests {
     #[test]
     fn priority_fee_rounds_up() {
         assert_eq!(priority_fee_lamports(3, 500_001), Ok(2));
+    }
+
+    #[test]
+    fn logs_are_bounded_and_truncation_is_explicit() {
+        let mut logs = vec![serde_json::json!("x".repeat(5_000))];
+        logs.extend((0..1_000).map(|index| serde_json::json!(format!("line-{index}"))));
+        let result = serde_json::json!({
+            "value": {
+                "err": null,
+                "logs": logs,
+                "innerInstructions": []
+            }
+        });
+
+        let effects =
+            simulation_effects(&result, &transaction()).unwrap_or_else(|_| unreachable!());
+
+        assert_eq!(effects.logs.len(), 1_000);
+        assert_eq!(effects.logs[0].chars().count(), 4_096);
+        assert!(effects.logs_truncated);
+    }
+
+    #[test]
+    fn absent_logs_are_empty_without_false_truncation() {
+        let result = serde_json::json!({
+            "value": {"err": null, "innerInstructions": []}
+        });
+
+        let effects =
+            simulation_effects(&result, &transaction()).unwrap_or_else(|_| unreachable!());
+
+        assert!(effects.logs.is_empty());
+        assert!(!effects.logs_truncated);
     }
 }

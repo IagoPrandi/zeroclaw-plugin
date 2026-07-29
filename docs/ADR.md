@@ -39,3 +39,28 @@ uses an independent 32-byte type at the application boundary.
 
 The supported runtime is Ollama on localhost with `qwen3.5:9b`. No cloud LLM
 provider or fallback is allowed in the reference configuration.
+
+## ADR-004 — Local tool grammar and strict source validation
+
+- Status: accepted
+- Date: 2026-07-28
+
+The public tool schema publishes `source` as a normal nested object because
+Ollama/Qwen converted a nested `oneOf` schema into a string-valued tool
+argument. Runtime deserialization remains a strict internally tagged enum, so
+`type=serialized` still requires `transaction_base64`, `type=confirmed` still
+requires `signature`, and unknown fields are rejected. This preserves the
+security contract without adding a permissive parsing fallback.
+
+## ADR-005 — Disable Qwen reasoning for deterministic presentation
+
+- Status: accepted
+- Date: 2026-07-29
+
+The reference ZeroClaw alias sets `think = false` for `qwen3.5:9b`. During M7,
+one post-tool turn consumed reasoning tokens but returned no visible answer.
+Disabling model reasoning is supported by the pinned ZeroClaw Ollama provider,
+reduces latency, and keeps the model's role limited to tool selection,
+argument assembly, and faithful presentation. Prompt version 1.0.2 also
+requires a visible response and explicit mapping of observed wallets and
+declared intent constraints.

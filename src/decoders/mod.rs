@@ -572,4 +572,16 @@ mod tests {
             ])
         );
     }
+
+    #[test]
+    fn rejects_malformed_or_duplicate_token_2022_tlv() {
+        assert!(token_2022_extension_names(&[1, 0, 4, 0, 0], 0).is_err());
+
+        let mut duplicate = Vec::new();
+        for _ in 0..2 {
+            duplicate.extend_from_slice(&14_u16.to_le_bytes());
+            duplicate.extend_from_slice(&0_u16.to_le_bytes());
+        }
+        assert!(token_2022_extension_names(&duplicate, 0).is_err());
+    }
 }

@@ -74,4 +74,14 @@ mod tests {
         );
         assert!(schema.pointer("/properties/source/oneOf").is_none());
     }
+
+    #[test]
+    fn published_schema_matches_agent_behavior_fixture() {
+        let published: serde_json::Value =
+            serde_json::from_str(&super::parameters_schema()).unwrap_or_else(|_| unreachable!());
+        let fixture: serde_json::Value =
+            serde_json::from_str(include_str!("../tests/fixtures/tool-schema.json"))
+                .unwrap_or_else(|_| unreachable!());
+        assert_eq!(published, fixture);
+    }
 }

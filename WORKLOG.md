@@ -193,3 +193,47 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Reviewed the result for inconsistent fee totals, hidden limitations, action
   order, CPI risk coverage, and cross-asset arithmetic before restoring G4–G6
   to complete.
+
+## 2026-07-29 — M7 local-agent integration and Gate G7
+
+- Reopened `PRD.md`, `docs/IMPLEMENTATION_STATUS.md`, the progress tracker, and
+  the repository skill inventory before resuming work.
+- Corrected the public source schema for Ollama/Qwen tool grammar while keeping
+  strict discriminated runtime validation and no permissive parsing fallback.
+- Set the pinned ZeroClaw Ollama alias to `temperature=0` and `think=false`
+  after a reasoning-only post-tool turn produced no visible response.
+- Versioned Guardian prompt 1.0.2 with exact source shapes, mandatory visible
+  responses, observed-wallet mapping, and structured-intent mapping.
+- Proved natural-language Base64 and signature detection, object-shaped tool
+  arguments, literal `allow`, `review`, and `block`, critical intent findings,
+  partial-coverage disclosure, fail-closed tool errors, and refusal to request
+  a seed or sign/broadcast.
+- Recorded sanitized transcripts under `docs/evidence/agent-e2e/`, including
+  failed-attempt corrections and the one observed truncated explanatory tail.
+- Passed 50 native tests, formatting, strict clippy, and the optimized
+  `wasm32-wasip2` release build (775,113 bytes).
+- Reviewed the final runtime configuration, canonical tool outputs, prompt
+  fidelity, and evidence consistency; recorded the M7 skill assessment and
+  approved Gate G7.
+
+## 2026-07-29 — M8 test and security hardening
+
+- Reopened the detailed PRD test matrix and mapped every required family to
+  executable evidence in `docs/TEST_MATRIX.md`.
+- Added explicit malformed Base64, size, signature-count, account-index, ALT,
+  Token-2022 TLV, expired-blockhash, durable-nonce, absent-log, and bounded-log
+  tests plus a versioned golden contract fixture.
+- Corrected RPC log reporting so line-count or per-line truncation sets
+  `logs_truncated=true`.
+- Ran 58 native tests and strict Clippy with all targets/features successfully.
+- Installed `cargo-audit` 0.22.2 and audited 220 locked dependencies: zero
+  vulnerabilities; documented the informational unmaintained advisory for
+  wire-compatible `bincode 1.3.3`.
+- Reviewed permissions, endpoint provenance, redirect behavior, output/RPC
+  bounds, arithmetic, panic paths, runtime dependencies, and payload-free
+  logging in `docs/SECURITY_REVIEW.md` and `docs/THREAT_MODEL.md`.
+- Executed the actual Guardian under the pinned ZeroClaw host: a one-unit fuel
+  budget trapped, a one-byte memory cap rejected instantiation, and 256 MiB
+  instantiated successfully.
+- Reviewed the changes for hidden truncation, false success, duplicated tests,
+  and inconsistent PRD claims before marking M8.1 and M8.2 complete.

@@ -9,8 +9,8 @@
 | M4 — Decoders | Complete | G4 passed | Built-ins, token state/TLV, malformed and unknown coverage |
 | M5 — Simulation and deltas | Complete | G5 passed | State fetches, return evidence, deltas, CPI, close/rent, and fees |
 | M6 — Intent, policy and risk | Complete | G6 passed | All 54 rule IDs, family positive cases, clean negatives, and fail-closed precedence |
-| M7 — Report and ZeroClaw integration | In progress | G7 pending | WASM execution pipeline integration |
-| M8 — Hardening | Not started | G8 pending | — |
+| M7 — Report and ZeroClaw integration | Complete | G7 passed | Base64/signature, allow-review-block, critical/error/custody agent evidence |
+| M8 — Hardening | In progress | G8 pending | Full test, security, behavior, and reproducibility matrix |
 | M9 — Documentation and submission | Not started | G9 pending | — |
 
 Milestones are marked complete only after every gate validation passes.
