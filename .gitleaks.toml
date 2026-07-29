@@ -1,0 +1,12 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Exclude vendored skill examples and exact public release/devnet identifiers"
+regexTarget = "secret"
+paths = [
+  '''^\.claude/skills/''',
+]
+regexes = [
+  '''^9DswaXsjcqozpbUUnL24wRqteqZTZH1UqCpFcsYWcgQP$''',
+]

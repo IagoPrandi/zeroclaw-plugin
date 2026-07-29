@@ -398,3 +398,20 @@ M0 is complete. M1 started only after all G0 validations passed.
   frames, and produced a legible 2:38 H.264 video at 1600x900.
 - Rendered the final demo twice with byte-identical SHA-256
   `1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828`.
+- Re-ran Gitleaks 8.30.1 over the complete Git history. Reviewed 31 initial
+  candidates without printing values: 29 belonged to vendored skill examples,
+  one was the public manifest signature, and one was the public devnet ALT.
+- Added a narrow Gitleaks configuration that retains default rules and excludes
+  only the vendored skill path plus the two exact public identifiers.
+- Repeated the filtered Gitleaks history scan: eight commits, 14.58 MB, zero
+  leaks.
+- Attempted the final Semgrep 1.164.0 rescan twice. The registry-backed
+  specific rules timed out before scanning, and `auto` remained blocked on the
+  registry; recorded the rescan as unavailable rather than reusing a false
+  zero. The completed M8 scan remains 162 rules with zero findings.
+- Re-ran OSV-Scanner 2.3.8 and RustSec over all 220 locked packages: zero known
+  vulnerabilities and the unchanged, no-fix `bincode 1.3.3` unmaintained
+  advisory.
+- Re-ran the final local suite after all code changes: 60/60 native tests,
+  formatting, strict Clippy across all targets/features, and the locked
+  optimized `wasm32-wasip2` build passed.
