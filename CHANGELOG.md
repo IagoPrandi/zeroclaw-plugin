@@ -2,6 +2,14 @@
 
 All notable changes follow semantic versioning.
 
+## 0.1.0 - 2026-07-29
+
+- Promoted the corrected RC2 component to the first stable release.
+- Added the signed deterministic ZIP/WASM distribution and published
+  checksums.
+- Added the validated 2:38 terminal demo, clean-install evidence,
+  prompt-injection transcript, submission one-pager, and final security review.
+
 ## 0.1.0-rc.2 - 2026-07-29
 
 - Fixed RPC-backed version-0 analysis so resolved Address Lookup Table keys are

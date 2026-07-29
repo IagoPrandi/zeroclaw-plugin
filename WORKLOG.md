@@ -421,3 +421,9 @@ M0 is complete. M1 started only after all G0 validations passed.
   authenticated external accounts.
 - Left M9/G9 in progress and recorded only the remaining external steps;
   no public link, release, or submission checkbox was marked prematurely.
+- Reopened `PRD.md`, the local skill inventory, and the GitHub/release skills
+  before resuming publication.
+- Found GitHub CLI 2.96.0 in its standard installation directory after the
+  current process PATH had not refreshed. Confirmed keyring authentication as
+  `IagoPrandi`, a public repository, synchronized `main`, and no conflicting
+  remote tags or releases.

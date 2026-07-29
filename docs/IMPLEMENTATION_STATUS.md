@@ -2,19 +2,16 @@
 
 - Current milestone: M9 — Documentation, demonstration, and submission.
 - Current submilestone: M9.2/M9.3/M9.4 public release and submission.
-- Last completed task: produced and visually validated the deterministic 2:38
-  demo video, passed the final local test/security/artifact audit, and updated
-  the PRD with only evidenced items.
-- Next executable task: install/authenticate GitHub CLI, push the six local
-  commits and RC2 tag, publish the release assets, upload the demo, and submit
-  the public links.
-- Blockers: GitHub CLI is not installed, and GitHub/video-host/Discord
-  publication requires the operator's authenticated accounts.
+- Last completed task: synchronized the validated source with public `main`
+  and confirmed GitHub CLI authentication for the public repository.
+- Next executable task: publish the semantic tag and GitHub release assets,
+  verify every public URL, then post the showcase/submission.
+- Blockers: the required Discord showcase and any YouTube/Vimeo/Google Drive
+  upload require the operator's authenticated external accounts.
 - Open risks: `bincode 1.3.3` is unmaintained with no compatible fixed release;
   the canonical release build must run in the pinned Linux container.
-- Last tagged commit: `461d4d5` (`v0.1.0-rc.2`), which supersedes RC1 after
-  the v0/ALT correction. Local `main` contains subsequent evidence/demo
-  commits and is six commits ahead of `origin/main`.
+- Last local release tag: `v0.1.0-rc.2`; the final `v0.1.0` tag will point to
+  the complete, synchronized M9 source state.
 - Last commands executed: final 60-test/fmt/Clippy/WASI suite, deterministic
   video reproduction, artifact/link/schema audit, Gitleaks history scan,
   OSV-Scanner, and RustSec.

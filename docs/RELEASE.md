@@ -2,9 +2,9 @@
 
 ## Canonical artifacts
 
-Source tag: `v0.1.0-rc.2`
+Source tag: `v0.1.0`
 
-Source commit: `461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
+RC2 component source: `461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
 
 The release component is built in the pinned `rust:1.96.1-bookworm` image
 identified by:
@@ -61,4 +61,5 @@ list is empty.
 - The sanitized terminal demo is H.264, 1600×900, 2:38, visually reviewed,
   and reproduced byte-identically in two renders.
 
-The public release URL is added after the release assets are published.
+Public release:
+<https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
