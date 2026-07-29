@@ -5,4 +5,5 @@ author = "Solana Transaction Guardian contributors"
 wasm_path = "solana_transaction_guardian.wasm"
 capabilities = ["tool"]
 permissions = ["config_read", "http_client"]
-
+signature = "sI4p6Rt9qJPN3HIqTjXBARJjeLudFoiPA-TxvXNjQPy31QCcdv4-PRnykZVssBKU6g6nIj6nV49kXmYkKAtQCg"
+publisher_key = "d743b2cd62da45564844b273760776c076642cec487700fdedfc601100e5c96d"

@@ -34,10 +34,18 @@ use crate::{
 ///
 /// Returns a typed, safe error for invalid input or configuration.
 #[allow(clippy::implicit_hasher)]
-#[allow(clippy::too_many_lines)]
 pub fn analyze_contract(
     input_json: &str,
     config_values: &HashMap<String, String>,
+) -> Result<GuardianReport, GuardianError> {
+    analyze_contract_with_lookups(input_json, config_values, &HashMap::new())
+}
+
+#[allow(clippy::too_many_lines)]
+fn analyze_contract_with_lookups(
+    input_json: &str,
+    config_values: &HashMap<String, String>,
+    lookup_tables: &HashMap<crate::address::Address32, DecodedLookupTable>,
 ) -> Result<GuardianReport, GuardianError> {
     let input: GuardianInput = serde_json::from_str(input_json)
         .map_err(|error| GuardianError::invalid_input(format!("invalid arguments: {error}")))?;
@@ -63,7 +71,7 @@ pub fn analyze_contract(
             if transaction_base64.len() > 8192 {
                 return Err(GuardianError::TransactionTooLarge);
             }
-            let normalized = normalize_base64(transaction_base64, &config.limits, &HashMap::new())?;
+            let normalized = normalize_base64(transaction_base64, &config.limits, lookup_tables)?;
             ("serialized", None, Some(normalized))
         }
         TransactionSource::Confirmed { signature } => {
@@ -261,7 +269,8 @@ pub fn analyze_with_rpc<T: RpcTransport>(
             let normalized = normalize_base64(transaction_base64, &config.limits, &lookup_tables)?;
             let decoded = decode_transaction(&normalized)?;
             let durable_nonce = has_durable_nonce(&decoded.actions);
-            let mut report = analyze_contract(input_json, config_values)?;
+            let mut report =
+                analyze_contract_with_lookups(input_json, config_values, &lookup_tables)?;
             if !config.enable_simulation {
                 return Ok(report);
             }
@@ -350,7 +359,11 @@ pub fn analyze_with_rpc<T: RpcTransport>(
                 "type": "serialized",
                 "transaction_base64": encoded
             });
-            let mut report = analyze_contract(&synthetic.to_string(), config_values)?;
+            let mut report = analyze_contract_with_lookups(
+                &synthetic.to_string(),
+                config_values,
+                &lookup_tables,
+            )?;
             report.source.source_type = "confirmed";
             report.source.signature = Some(signature.clone());
             report.source.slot = slot;
@@ -693,7 +706,7 @@ mod tests {
     use std::collections::{BTreeMap, VecDeque};
 
     use base64::{Engine as _, engine::general_purpose::STANDARD};
-    use solana_message::{Message, MessageHeader, VersionedMessage};
+    use solana_message::{Message, MessageHeader, VersionedMessage, v0};
     use solana_transaction::versioned::VersionedTransaction;
 
     use crate::{
@@ -732,6 +745,37 @@ mod tests {
             }),
         };
         STANDARD.encode(bincode::serialize(&transaction).unwrap_or_default())
+    }
+
+    fn valid_encoded_v0_lookup_transaction() -> (String, String) {
+        let table = solana_message::Address::new_from_array([7; 32]);
+        let transaction = VersionedTransaction {
+            signatures: vec![solana_transaction::Signature::default()],
+            message: VersionedMessage::V0(v0::Message {
+                header: MessageHeader {
+                    num_required_signatures: 1,
+                    num_readonly_signed_accounts: 0,
+                    num_readonly_unsigned_accounts: 0,
+                },
+                account_keys: vec![solana_message::Address::new_from_array([1; 32])],
+                recent_blockhash: solana_message::Hash::default(),
+                instructions: vec![],
+                address_table_lookups: vec![v0::MessageAddressTableLookup {
+                    account_key: table,
+                    writable_indexes: vec![],
+                    readonly_indexes: vec![0],
+                }],
+            }),
+        };
+        let mut table_data = vec![0; 56];
+        table_data[0..4].copy_from_slice(&1_u32.to_le_bytes());
+        table_data[4..12].copy_from_slice(&u64::MAX.to_le_bytes());
+        table_data[12..20].copy_from_slice(&1_u64.to_le_bytes());
+        table_data.extend_from_slice(&[2; 32]);
+        (
+            STANDARD.encode(bincode::serialize(&transaction).unwrap_or_default()),
+            STANDARD.encode(table_data),
+        )
     }
 
     #[test]
@@ -787,6 +831,60 @@ mod tests {
         assert!(matches!(
             report.map(|value| (value.decision, value.analysis_complete)),
             Ok((crate::output::Decision::Allow, true))
+        ));
+    }
+
+    #[test]
+    fn rpc_backed_v0_reuses_resolved_lookup_tables() {
+        let (transaction, table_data) = valid_encoded_v0_lookup_transaction();
+        let input = serde_json::json!({
+            "source":{"type":"serialized","transaction_base64":transaction},
+            "cluster":"devnet"
+        })
+        .to_string();
+        let account_response = serde_json::json!({
+            "jsonrpc":"2.0",
+            "id":1,
+            "result":{
+                "context":{"slot":1},
+                "value":[{
+                    "owner":"AddressLookupTab1e1111111111111111111111111",
+                    "data":[table_data,"base64"],
+                    "lamports":1,
+                    "executable":false,
+                    "rentEpoch":0,
+                    "space":88
+                }]
+            }
+        })
+        .to_string();
+        let transport = MockTransport {
+            responses: [
+                account_response,
+                r#"{"jsonrpc":"2.0","id":2,"result":{"value":{"err":null,"logs":[],"unitsConsumed":0,"innerInstructions":[]}}}"#.to_owned(),
+                r#"{"jsonrpc":"2.0","id":3,"result":{"context":{"slot":1},"value":5000}}"#.to_owned(),
+            ]
+            .into_iter()
+            .map(|body| HttpResponse {
+                status: 200,
+                body: body.into_bytes(),
+            })
+            .collect(),
+        };
+
+        let report = super::analyze_with_rpc(&input, &valid_test_config(), transport);
+
+        assert!(matches!(
+            report.map(|value| (
+                value.source.transaction_version,
+                value.coverage.address_lookup_tables_resolved,
+                value.decision
+            )),
+            Ok((
+                transaction_version,
+                true,
+                crate::output::Decision::Allow
+            )) if transaction_version == "v0"
         ));
     }
 

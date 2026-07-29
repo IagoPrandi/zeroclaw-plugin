@@ -18,13 +18,13 @@ separate target directory.
 Two independent clean target directories produced byte-identical components:
 
 ```text
-size    775945 bytes
-sha256  c375d0319693e110afa4f1cef579b1b763e68ce371f5b64f19d63c65c099ba00
+size    775829 bytes
+sha256  780d7a88aa09eadcb345a7bfa6fd58e80cd93de27baa425d71439d6987e5c7e5
 ```
 
 The first container also ran the complete CI script:
 
-- 59 native tests passed;
+- 60 native tests passed;
 - formatting passed;
 - strict Clippy passed;
 - locked optimized WASI build passed.

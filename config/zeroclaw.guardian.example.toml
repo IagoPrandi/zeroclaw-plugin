@@ -1,0 +1,57 @@
+# ZeroClaw v0.8.3 reference profile. No cloud provider or fallback is defined.
+schema_version = 3
+
+[providers.models.ollama.local]
+uri = "http://127.0.0.1:11434"
+model = "qwen3.5:9b"
+num_ctx = 8192
+temperature = 0.0
+think = false
+timeout_secs = 600
+max_tokens = 1000
+
+[agents.guardian]
+model_provider = "ollama.local"
+risk_profile = "guardian"
+runtime_profile = "guardian_local"
+
+[risk_profiles.guardian]
+level = "full"
+allowed_tools = ["solana_transaction_guardian"]
+
+[runtime_profiles.guardian_local]
+agentic = true
+compact_context = true
+strict_tool_parsing = true
+max_tool_iterations = 4
+max_actions_per_hour = 10
+max_cost_per_day_cents = 100
+agentic_timeout_secs = 600
+max_history_messages = 10
+
+[plugins]
+enabled = true
+
+[plugins.security]
+signature_mode = "strict"
+trusted_publisher_keys = ["d743b2cd62da45564844b273760776c076642cec487700fdedfc601100e5c96d"]
+
+[[plugins.entries]]
+name = "solana-transaction-guardian"
+
+[plugins.entries.config]
+rpc_endpoints_json = "{\"devnet\":\"https://api.devnet.solana.com\"}"
+allowed_clusters_json = "[\"devnet\"]"
+request_timeout_ms = "5000"
+max_rpc_calls = "6"
+max_http_response_bytes = "2097152"
+max_transaction_bytes = "1232"
+max_output_bytes = "262144"
+fail_closed = "true"
+enable_simulation = "true"
+policy_version = "default-1"
+unknown_program_policy = "review"
+unresolved_alt_policy = "block"
+simulation_unavailable_policy = "block"
+token2022_transfer_hook_policy = "review"
+token2022_permanent_delegate_policy = "block"

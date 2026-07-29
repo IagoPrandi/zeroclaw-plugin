@@ -1,0 +1,35 @@
+{
+  "id": "hidden-delegate",
+  "title": "Payment-shaped candidate with an additional token delegate approval",
+  "narrative": "The first instruction is a one-lamport payment, but a second SPL Token Approve instruction grants an undeclared delegate one million raw units.",
+  "tool_input": {
+    "source": {
+      "type": "serialized",
+      "transaction_base64": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAMGAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbd9uHXZaGT2cvhRs7reawctIXtX1s3kTqM9YV+/wCpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACBAIAAQwCAAAAAQAAAAAAAAAFAwIDAAkEQEIPAAAAAAA="
+    },
+    "cluster": "devnet",
+    "observed_wallets": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "expected_intent": {
+      "description": "Only transfer one lamport to the documented recipient",
+      "allowed_programs": [
+        "11111111111111111111111111111111"
+      ],
+      "allowed_recipients": [
+        "8qbHbw2BbbTHBW1sbeqakYXVKRQM8Ne7pLK7m6CVfeR"
+      ],
+      "max_sol_out_lamports": "1",
+      "token_limits": []
+    },
+    "output_language": "en"
+  },
+  "expected": {
+    "decision": "block",
+    "action_kind": "approve",
+    "required_rule_ids": [
+      "AUTH-004",
+      "INT-003"
+    ]
+  }
+}

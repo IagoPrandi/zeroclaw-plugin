@@ -21,5 +21,5 @@ every required variant.
 | Resources | release size, host fuel trap, host memory rejection/256 MiB success | `docs/SECURITY_REVIEW.md` |
 | Performance | 20 successful candidate analyses under a six-RPC budget; p95 1,653 ms | `docs/evidence/runtime/performance.md` |
 
-Latest native result: 59 passed, 0 failed, 0 ignored. Strict formatting and
+Latest native result: 60 passed, 0 failed, 0 ignored. Strict formatting and
 Clippy pass on Rust 1.96.1.

@@ -1,0 +1,21 @@
+{
+  "id": "safe-transfer",
+  "title": "Simple one-lamport System transfer",
+  "narrative": "A transparent devnet candidate containing one decoded System transfer and no extra action.",
+  "tool_input": {
+    "source": {
+      "type": "serialized",
+      "transaction_base64": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAEDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQECAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAgIAAQwCAAAAAQAAAAAAAAA="
+    },
+    "cluster": "devnet",
+    "observed_wallets": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "output_language": "en"
+  },
+  "expected": {
+    "decision": "allow",
+    "action_kind": "transfer",
+    "program_id": "11111111111111111111111111111111"
+  }
+}

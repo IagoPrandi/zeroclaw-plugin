@@ -6,15 +6,19 @@ Date: 2026-07-29
 
 The repository was mounted read-only into a clean
 `rust:1.96.1-bookworm` image. Cargo used an empty target directory and ran
-`scripts/check.sh` successfully: 59 tests, formatting, strict Clippy, and
+`scripts/check.sh` successfully: 60 tests, formatting, strict Clippy, and
 release `wasm32-wasip2`.
 
-Two builds pinned by image digest produced the same 775,945-byte WASM and
+Two builds pinned by image digest produced the same 775,829-byte WASM and
 SHA-256:
 
 ```text
-c375d0319693e110afa4f1cef579b1b763e68ce371f5b64f19d63c65c099ba00
+780d7a88aa09eadcb345a7bfa6fd58e80cd93de27baa425d71439d6987e5c7e5
 ```
+
+This second clean validation supersedes the RC1 component after the v0/ALT
+lookup-map regression was corrected. Both builds used independent empty
+target directories.
 
 ## Ollama and Qwen
 
@@ -34,10 +38,11 @@ The container was stopped after validation.
 
 ## Strict signature
 
-The actual Guardian manifest was signed with an ephemeral Ed25519 test key
-using the pinned host's official signature functions. ZeroClaw strict mode
-loaded it with the trusted public key and rejected the same plugin with an
-empty trust list. No private key was written to the repository.
+The release manifest was signed with the project publisher's Ed25519 key using
+the pinned host's official signature functions. ZeroClaw strict mode loaded it
+with the trusted public key and rejected the same plugin with an empty trust
+list. The private key remains outside the repository with user-only filesystem
+access.
 
 ## Cloud/credential check
 

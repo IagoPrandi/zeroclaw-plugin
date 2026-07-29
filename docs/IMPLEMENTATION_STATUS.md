@@ -1,23 +1,26 @@
 # Current state
 
 - Current milestone: M9 — Documentation, demonstration, and submission.
-- Current submilestone: M9.1 documentation audit.
-- Last completed task: approved Gate G8 and versioned release candidate
-  `v0.1.0-rc.1` at commit `96df5b1` after the complete quality, security,
-  behavior, reproducibility, and performance matrix passed.
-- Next executable task: close English/pt-BR documentation gaps and prepare the
-  signed distribution package.
+- Current submilestone: M9.3 public demonstration and M9.4 submission.
+- Last completed task: produced a deterministic signed package from two
+  byte-identical canonical builds, installed it into a clean ZeroClaw profile,
+  and validated strict signature handling plus all four demo fixtures.
+- Next executable task: finish public release/demo links and run the final
+  submission validation.
 - Blockers: none.
 - Open risks: `bincode 1.3.3` is unmaintained with no compatible fixed release;
   the canonical release build must run in the pinned Linux container.
-- Last passing commit: `96df5b1` (`v0.1.0-rc.1`).
-- Last commands executed: Gitleaks, Semgrep, OSV-Scanner, clean-container CI,
-  strict-host resource/signature tests, and the 30-conversation Qwen matrix.
-- Test status: 59 native tests pass, including arbitrary-wire property tests
-  and schema/golden contract checks; strict clippy passes on Rust 1.96.1.
+- Last tagged commit: `96df5b1` (`v0.1.0-rc.1`); the corrected release state is
+  validated in the working tree and will receive a superseding tag.
+- Last commands executed: two clean-container builds, deterministic packaging,
+  clean ZeroClaw installation, strict-signature discovery, and the four-case
+  demo-fixture host test.
+- Test status: 60 native tests pass, including arbitrary-wire property tests,
+  schema/golden contract checks, and RPC-backed v0/ALT lookup reuse; strict
+  clippy passes on Rust 1.96.1.
 - Build status: plugin release component passes for `wasm32-wasip2`
-  (canonical Linux size 775,945 bytes; SHA-256
-  `c375d0319693e110afa4f1cef579b1b763e68ce371f5b64f19d63c65c099ba00`).
+  (canonical Linux size 775,829 bytes; SHA-256
+  `780d7a88aa09eadcb345a7bfa6fd58e80cd93de27baa425d71439d6987e5c7e5`).
 - Performance status: 20/20 live devnet candidate analyses passed under the
   six-RPC budget; p95 was 1,653 ms against an 8,000 ms target.
 - Evidence produced: competition requirements, ADRs, local Ollama lock, and

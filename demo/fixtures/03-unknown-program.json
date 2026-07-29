@@ -1,0 +1,32 @@
+{
+  "id": "unknown-program",
+  "title": "Candidate invoking an undeclared unknown program",
+  "narrative": "The instruction targets a program for which the Guardian has no decoder, while structured intent allows only the System Program.",
+  "tool_input": {
+    "source": {
+      "type": "serialized",
+      "transaction_base64": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAATerb7v"
+    },
+    "cluster": "devnet",
+    "observed_wallets": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "expected_intent": {
+      "description": "Use only the System Program",
+      "allowed_programs": [
+        "11111111111111111111111111111111"
+      ],
+      "allowed_recipients": [],
+      "token_limits": []
+    },
+    "output_language": "en"
+  },
+  "expected": {
+    "decision": "block",
+    "action_kind": "unknown_program",
+    "required_rule_ids": [
+      "COV-003",
+      "INT-001"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # Competition Requirements
 
-Source reviewed on 2026-07-27:
+Source reviewed on 2026-07-27 and rechecked on 2026-07-29:
 <https://superteam.fun/earn/listing/zeroclaw>
 
 ## Official requirements
@@ -16,6 +16,8 @@ Source reviewed on 2026-07-27:
   custody tier, threat model, reproducible config/SOPs/skills/code, and
   redacted secrets.
 - A GitHub repository link is required for custom plugin code.
+- The Superteam form requires a demo video link and a supporting-material
+  link. A one-pager link is optional.
 - A standalone plugin is not a valid submission; the plugin must support a
   working use case.
 - Do not open a ZeroClaw registry PR during the bounty.
@@ -46,7 +48,11 @@ transaction-review workflow, not presented as a component in isolation.
 
 - Demo video link (required).
 - One-pager link (optional).
-- Additional form fields must be rechecked immediately before submission.
+- Supporting material (required).
+
+The final review found the listing open with 65 submissions. The substantive
+requirements, deadline, scoring, disqualifiers, and custody guidance were
+unchanged from the initial review.
 
 ## Evidence
 

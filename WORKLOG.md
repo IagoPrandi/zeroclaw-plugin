@@ -328,3 +328,53 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Reviewed the tag target, exact commit, remaining conditional skill items,
   residual dependency advisory, and PRD checkbox consistency before approving
   Gate G8.
+
+## 2026-07-29 — M9.1 documentation
+
+- Audited every M9.1 item against the repository instead of treating existing
+  short files as complete documentation.
+- Replaced the stale M0 README with a release-oriented English guide and added
+  a reviewed pt-BR entry point.
+- Added architecture, installation, configuration, exact ZeroClaw v0.8.3
+  Ollama syntax, model verification, examples, and third-party attribution
+  documents.
+- Added a strict, localhost-only, no-cloud-fallback reference profile and
+  documented the separation between deterministic plugin authority and Qwen
+  presentation.
+- Expanded security reporting/operator responsibilities and updated the
+  changelog and Cargo repository metadata.
+- Validated all local Markdown links, parsed the example TOML, checked locked
+  Cargo metadata, ran `git diff --check`, and reviewed public documentation for
+  stale milestone/release claims before completing M9.1.
+
+## 2026-07-29 — M9 release package and demo validation
+
+- Reopened the required PRD and local skill inventory before continuing M9;
+  applied the release/configuration and security checklist guidance.
+- Added final release, submission, publisher-key, bilingual setup, demo, and
+  competition documentation plus a deterministic packaging program.
+- During the real v0/ALT demo, found that the RPC-backed path resolved lookup
+  tables and then discarded the resolved map during a second normalization
+  pass. Refactored the core to reuse the map and added a native regression.
+- Passed 60 native tests, formatting, strict Clippy, and a locked optimized
+  WASI build after the correction.
+- Ran two builds in independent empty target directories under the pinned
+  Rust container. Both produced the same 775,829-byte component with SHA-256
+  `780d7a88aa09eadcb345a7bfa6fd58e80cd93de27baa425d71439d6987e5c7e5`.
+- Signed the final manifest with the persistent Ed25519 publisher key stored
+  outside the repository with user-only access. Reproduced the signature and
+  validated strict trust and rejection with an empty trust list.
+- Generated the release package twice. Both 253,346-byte ZIPs had SHA-256
+  `70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b`;
+  archive integrity and the embedded WASM hash passed.
+- Installed the archive into an empty ZeroClaw v0.8.3 profile and confirmed
+  install/list/info output and the exact two declared permissions.
+- Executed all four release fixtures in the real host: safe legacy `allow`,
+  hidden delegate `block`, unknown program `block`, and resolved v0/ALT
+  `allow`.
+- Rechecked the live competition listing. It remained open and unchanged in
+  substance, with 65 submissions; required form fields are demo video and
+  supporting material, while the one-pager is optional.
+- Reviewed the package/source relationship after updating README content,
+  rebuilt the archive, and marked only validated PRD items complete. Public
+  video, public release links, semantic tag, and submission remain open.

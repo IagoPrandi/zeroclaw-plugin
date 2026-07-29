@@ -1,0 +1,22 @@
+{
+  "id": "v0-alt",
+  "title": "Version-0 candidate using an active devnet Address Lookup Table",
+  "narrative": "An offline-generated version-0 candidate loads its transfer recipient from index 23 of a public active devnet Address Lookup Table.",
+  "tool_input": {
+    "source": {
+      "type": "serialized",
+      "transaction_base64": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQABAgEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAgACDAIAAAABAAAAAAAAAAF6KhB1oIW/vnTOKeSdeqi8v1hPolQDUJvXSP8nSAeKcAEXAA=="
+    },
+    "cluster": "devnet",
+    "observed_wallets": [
+      "4vJ9JU1bJJE96FWSJKvHsmmFADCg4gpZQff4P3bkLKi"
+    ],
+    "output_language": "en"
+  },
+  "expected": {
+    "transaction_version": "v0",
+    "address_lookup_tables_resolved": true,
+    "action_kind": "transfer",
+    "lookup_table": "9DswaXsjcqozpbUUnL24wRqteqZTZH1UqCpFcsYWcgQP"
+  }
+}

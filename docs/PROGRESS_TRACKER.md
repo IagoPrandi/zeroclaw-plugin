@@ -10,7 +10,7 @@
 | M5 — Simulation and deltas | Complete | G5 passed | State fetches, return evidence, deltas, CPI, close/rent, and fees |
 | M6 — Intent, policy and risk | Complete | G6 passed | All 54 rule IDs, family positive cases, clean negatives, and fail-closed precedence |
 | M7 — Report and ZeroClaw integration | Complete | G7 passed | Base64/signature, allow-review-block, critical/error/custody agent evidence |
-| M8 — Hardening | Complete | G8 passed | 59 tests, security scans, 30/30 Qwen matrix, p95 1,653 ms, reproducible RC |
-| M9 — Documentation and submission | In progress | G9 pending | Documentation and release-package audit started |
+| M8 — Hardening | Complete | G8 passed | 60 tests, security scans, 30/30 Qwen matrix, p95 1,653 ms, reproducible RC |
+| M9 — Documentation and submission | In progress | G9 pending | Docs complete; signed deterministic package and four demo fixtures validated |
 
 Milestones are marked complete only after every gate validation passes.
