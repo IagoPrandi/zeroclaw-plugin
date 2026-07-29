@@ -15,6 +15,10 @@ pode alterar a decisão canônica.
 
 [English](README.md)
 
+[Baixar v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0)
+·
+[Assistir à demo pública de 2:38](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4)
+
 ## Por que ele existe
 
 Uma transação pode parecer um pagamento e, ao mesmo tempo, aprovar um delegate,
@@ -63,7 +67,9 @@ Pré-requisitos:
 - Ollama 0.32.0 em `127.0.0.1:11434`;
 - `qwen3.5:9b` com digest
   `6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7`;
-- o arquivo da release ou Rust 1.96.1 com target `wasm32-wasip2`.
+- o
+  [arquivo da release v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip)
+  ou Rust 1.96.1 com target `wasm32-wasip2`.
 
 ```bash
 ollama pull qwen3.5:9b
@@ -98,7 +104,7 @@ limites.
 
 ## Segurança e evidências
 
-A release candidate passou por 60 testes nativos, build WASI reproduzível,
+A release v0.1.0 passou por 60 testes nativos, build WASI reproduzível,
 limites reais do host, assinatura strict, scanners de segurança, 30 conversas
 controladas com o Qwen e 20 análises devnet com p95 de 1.653 ms sob orçamento
 de seis RPCs. Consulte [a matriz de testes](docs/TEST_MATRIX.md).

@@ -2,9 +2,12 @@
 
 Date: 2026-07-29
 
-Source tag: `v0.1.0-rc.2`
+Release tag: `v0.1.0`
 
-Source commit: `461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
+Release tag commit: `e138f2d2b1547a72343f51a2fa5305956565458c`
+
+Canonical component source:
+`461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
 
 ## Canonical component
 
@@ -73,3 +76,19 @@ sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
 
 Five representative frames were visually reviewed for readability and
 content. A second render was byte-identical.
+
+## Public release verification
+
+The stable non-draft, non-prerelease GitHub release is public at:
+
+<https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
+
+The separate public demo is available at:
+
+<https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>
+
+All five release assets were downloaded from GitHub into a new empty
+directory. The downloaded byte counts and SHA-256 values matched the local
+validated files and GitHub asset metadata exactly. The public repository,
+release page, and all direct asset URLs returned HTTP 200 without
+authentication.

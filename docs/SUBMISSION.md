@@ -86,10 +86,13 @@ probabilistic; the WASM JSON report is authoritative. See
 ## Links
 
 - Repository: <https://github.com/IagoPrandi/zeroclaw-plugin>
+- Release: <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
+- Public demo (2:38):
+  <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>
+- Release archive:
+  <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip>
 - Installation: [`INSTALLATION.md`](INSTALLATION.md)
 - Architecture: [`ARCHITECTURE.md`](ARCHITECTURE.md)
 - Threat model: [`THREAT_MODEL.md`](THREAT_MODEL.md)
 - Test evidence: [`TEST_MATRIX.md`](TEST_MATRIX.md)
 - Demo script: [`../demo/DEMO_SCRIPT.md`](../demo/DEMO_SCRIPT.md)
-
-The public release and demo-video URLs are inserted after publication.

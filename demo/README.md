@@ -38,3 +38,6 @@ The rendered video identifies the removed idle-inference interval and never
 captures the desktop, private windows, credentials, or raw transaction bytes.
 The validated release render is 2:38, H.264 at 1600×900, with SHA-256
 `1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828`.
+
+Watch or download the
+[public demo](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4).

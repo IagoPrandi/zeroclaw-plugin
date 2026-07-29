@@ -16,6 +16,10 @@ change the canonical decision.
 
 [Português do Brasil](README.pt-BR.md)
 
+[Download v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0)
+·
+[Watch the 2:38 public demo](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4)
+
 ## Why it exists
 
 A transaction can look like a payment while also approving a delegate,
@@ -62,7 +66,9 @@ Prerequisites:
 - Ollama 0.32.0 listening on `127.0.0.1:11434`;
 - `qwen3.5:9b` with digest
   `6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7`;
-- the release archive or Rust 1.96.1 with target `wasm32-wasip2`.
+- the
+  [v0.1.0 release archive](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip)
+  or Rust 1.96.1 with target `wasm32-wasip2`.
 
 ```bash
 ollama pull qwen3.5:9b
@@ -128,7 +134,7 @@ expected decisions are in [docs/EXAMPLES.md](docs/EXAMPLES.md).
 
 ## Verification
 
-The release candidate passed:
+The v0.1.0 release passed:
 
 - 60 native tests, formatting, and strict Clippy;
 - clean locked `wasm32-wasip2` builds with byte-identical canonical output;

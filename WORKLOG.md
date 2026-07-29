@@ -427,3 +427,27 @@ M0 is complete. M1 started only after all G0 validations passed.
   current process PATH had not refreshed. Confirmed keyring authentication as
   `IagoPrandi`, a public repository, synchronized `main`, and no conflicting
   remote tags or releases.
+
+## 2026-07-29 — Stable v0.1.0 publication
+
+- Published `main` at `e138f2d`, pushed the annotated `v0.1.0` tag, and
+  created a stable, non-draft, non-prerelease GitHub release.
+- Uploaded the signed manifest, checksums, canonical WASM, deterministic ZIP,
+  and 2:38 public demo as release assets.
+- Downloaded all five assets from the public release into a new empty
+  directory. Every byte count and SHA-256 matched both the local validated
+  artifact and GitHub's asset digest.
+- Compared the archive's `README.md`, `LICENSE`, and signed `manifest.toml`
+  Git blob hashes with the stable `v0.1.0` tag; all three matched exactly.
+- Confirmed HTTP 200 without authentication for the public repository,
+  release page, demo, manifest, checksums, archive, and standalone WASM.
+- Added the public release, demo, and archive URLs to the English and
+  Portuguese entry points, release evidence, demo guide, and prepared
+  submission one-pager.
+- Rechecked the official/recommended submission requirements against the
+  prepared materials. The only incomplete M9/G9 action is the authenticated
+  showcase post in the ZeroClaw Discord `#solana-bounty` channel and any
+  associated competition form submission.
+- Reviewed source-tag provenance, published hashes, direct links, milestone
+  checkboxes, and the remaining external-account boundary before updating
+  the PRD and progress tracker.

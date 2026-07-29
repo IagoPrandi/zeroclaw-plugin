@@ -1,20 +1,22 @@
 # Current state
 
 - Current milestone: M9 — Documentation, demonstration, and submission.
-- Current submilestone: M9.2/M9.3/M9.4 public release and submission.
-- Last completed task: synchronized the validated source with public `main`
-  and confirmed GitHub CLI authentication for the public repository.
-- Next executable task: publish the semantic tag and GitHub release assets,
-  verify every public URL, then post the showcase/submission.
-- Blockers: the required Discord showcase and any YouTube/Vimeo/Google Drive
-  upload require the operator's authenticated external accounts.
+- Current submilestone: M9.4 authenticated showcase/submission.
+- Last completed task: published v0.1.0 and independently downloaded and
+  verified every public release asset and link.
+- Next executable task: post the prepared showcase in the ZeroClaw Discord
+  `#solana-bounty` channel and submit the competition form if required.
+- Blocker: the required Discord showcase needs the operator's authenticated
+  Discord account; no Discord connector is available in this workspace.
 - Open risks: `bincode 1.3.3` is unmaintained with no compatible fixed release;
   the canonical release build must run in the pinned Linux container.
-- Last local release tag: `v0.1.0-rc.2`; the final `v0.1.0` tag will point to
-  the complete, synchronized M9 source state.
-- Last commands executed: final 60-test/fmt/Clippy/WASI suite, deterministic
-  video reproduction, artifact/link/schema audit, Gitleaks history scan,
-  OSV-Scanner, and RustSec.
+- Public release: <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>.
+- Public demo:
+  <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>.
+- Stable release tag: `v0.1.0` at
+  `e138f2d2b1547a72343f51a2fa5305956565458c`.
+- Last commands executed: GitHub release publication, fresh public asset
+  downloads, byte/hash comparison, and HTTP 200 checks for all public URLs.
 - Test status: 60 native tests pass, including arbitrary-wire property tests,
   schema/golden contract checks, and RPC-backed v0/ALT lookup reuse; strict
   clippy passes on Rust 1.96.1.
