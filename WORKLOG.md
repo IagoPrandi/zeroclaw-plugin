@@ -298,3 +298,33 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Ran the final release-candidate suite: 59/59 native tests, formatting,
   strict Clippy with all targets/features, locked optimized `wasm32-wasip2`
   build, unchanged 30/30 behavior-matrix rescore, and `git diff --check`.
+
+## 2026-07-29 — M8 performance closure
+
+- Added an external pinned-host measurement that executes the real Guardian
+  component against devnet with `max_rpc_calls=6`.
+- Repeated the common candidate analysis 20 times on one component instance;
+  all reports succeeded, proving the enforced six-call budget was not
+  exhausted.
+- Measured sorted latency from 1,592 to 1,669 ms with p95 1,653 ms, well below
+  the 8,000 ms target. Component compilation/instantiation and LLM inference
+  were intentionally excluded.
+- Reviewed the sample calculation, successful-report condition, RPC budget
+  semantics, and recorded host/version provenance before completing NFR-010
+  and NFR-011.
+
+## 2026-07-29 — Gate G8 release candidate approval
+
+- Confirmed `Cargo.lock` has been tracked since commit `a2c9145`, closing the
+  only administrative item left in Gate G0 and completing M0.
+- Committed the M8 hardening/behavior/reproducibility evidence as `96df5b1`
+  and created annotated tag `v0.1.0-rc.1`.
+- Confirmed all mandatory M8 quality, security, local-model, resource,
+  performance, reproducibility, and skill-assessment criteria have executable
+  evidence.
+- Recorded the gate approval in
+  `docs/evidence/runtime/g8-release-candidate.md`, completed M8 in the progress
+  tracker, and advanced the implementation status to M9.
+- Reviewed the tag target, exact commit, remaining conditional skill items,
+  residual dependency advisory, and PRD checkbox consistency before approving
+  Gate G8.
