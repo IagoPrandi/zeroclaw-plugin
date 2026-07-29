@@ -415,3 +415,9 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Re-ran the final local suite after all code changes: 60/60 native tests,
   formatting, strict Clippy across all targets/features, and the locked
   optimized `wasm32-wasip2` build passed.
+- Attempted to enter the GitHub publication workflow. The required GitHub CLI
+  is not installed, so the skill correctly stopped before push/PR/release.
+  Public video hosting and the Discord showcase also require the operator's
+  authenticated external accounts.
+- Left M9/G9 in progress and recorded only the remaining external steps;
+  no public link, release, or submission checkbox was marked prematurely.

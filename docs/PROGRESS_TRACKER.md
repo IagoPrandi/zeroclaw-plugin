@@ -11,6 +11,6 @@
 | M6 — Intent, policy and risk | Complete | G6 passed | All 54 rule IDs, family positive cases, clean negatives, and fail-closed precedence |
 | M7 — Report and ZeroClaw integration | Complete | G7 passed | Base64/signature, allow-review-block, critical/error/custody agent evidence |
 | M8 — Hardening | Complete | G8 passed | 60 tests, security scans, 30/30 Qwen matrix, p95 1,653 ms, reproducible RC |
-| M9 — Documentation and submission | In progress | G9 pending | Docs complete; signed deterministic package and four demo fixtures validated |
+| M9 — Documentation and submission | In progress | G9 pending | Local package/video complete; public release and submission await authenticated publishing |
 
 Milestones are marked complete only after every gate validation passes.
