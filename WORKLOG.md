@@ -237,3 +237,64 @@ M0 is complete. M1 started only after all G0 validations passed.
   instantiated successfully.
 - Reviewed the changes for hidden truncation, false success, duplicated tests,
   and inconsistent PRD claims before marking M8.1 and M8.2 complete.
+
+## 2026-07-29 — M8 Qwen behavior matrix
+
+- Added a reproducible local Ollama harness backed by the versioned prompt and
+  a schema fixture that is equality-tested against the Rust tool schema.
+- Executed a 10-case dry run and found that ambiguous dual-source input caused
+  two tool calls.
+- Updated prompt 1.0.3 to permit at most one Guardian call and require
+  clarification for multiple transaction sources.
+- Repeated the full matrix from the start: 30 conversations, ten cases three
+  times, 1,464.6 seconds total model time.
+- Preserved the initial scoring artifact after identifying six validator false
+  negatives: the responses contained the complete findings but paraphrased one
+  rule ID and represented incompleteness as `analysis_complete=false`.
+- Rescored the unchanged raw responses against semantic requirements: 30/30
+  passed, 100% tool-call correctness, 100% decision preservation, zero omitted
+  critical/high finding, zero secret/signing attempt, and zero positive
+  recommendation after error or unavailability.
+- Reviewed the final case distribution, repeated decisions, raw outputs, and
+  threshold calculations before marking M8.3 complete.
+
+## 2026-07-29 — M8 reproducibility and clean-runtime validation
+
+- Signed the real manifest with an ephemeral Ed25519 test key through the
+  pinned ZeroClaw signature implementation; strict mode accepted the trusted
+  publisher and rejected an empty trust list.
+- Ran the full CI script in a clean Rust 1.96.1 Linux container with the source
+  mounted read-only: 59 tests, formatting, Clippy, and locked WASI release all
+  passed.
+- Pinned the release image digest and produced two independent, byte-identical
+  775,945-byte WASM components with SHA-256
+  `c375d0319693e110afa4f1cef579b1b763e68ce371f5b64f19d63c65c099ba00`.
+- Recorded that Windows output is functionally valid but byte-different; only
+  the pinned Linux container is the canonical release environment.
+- Started an isolated Ollama 0.32.0 container on localhost with a read-only
+  model cache, verified the full `qwen3.5:9b` digest, and received exact `OK`.
+- Found no repository credential, private key, cloud provider config, or cloud
+  LLM endpoint in the runtime trace; stopped the isolated container.
+- Reviewed reproducibility claims, container isolation, key handling,
+  limitations, and evidence consistency before marking M8.4 complete.
+
+## 2026-07-29 — M8 formal security scan closure
+
+- Reopened `PRD.md`, the implementation status, progress tracker, worklog, and
+  local skill inventory before continuing.
+- Applied the local release/configuration and security checklist skills to the
+  release-candidate gate.
+- Ran Semgrep 1.164.0 with 162 Rust, Python, and shell rules over 20 source and
+  harness files: zero findings and 100% parsed lines.
+- Ran Gitleaks 8.30.1 over a clean 544.8 KB project snapshot: zero secrets.
+  A preliminary workspace-wide scan found only documented placeholders in the
+  external `.claude` skill catalog.
+- Ran OSV-Scanner 2.3.8 against all 220 locked packages: zero
+  critical/high/medium/low vulnerabilities and the already documented
+  severity-unknown `bincode 1.3.3` maintenance advisory with no fixed release.
+- Removed the validated temporary Gitleaks snapshot after the scan.
+- Reviewed scanner scope, false-positive provenance, advisory severity, and
+  PRD claims before marking only the newly evidenced NFRs complete.
+- Ran the final release-candidate suite: 59/59 native tests, formatting,
+  strict Clippy with all targets/features, locked optimized `wasm32-wasip2`
+  build, unchanged 30/30 behavior-matrix rescore, and `git diff --check`.

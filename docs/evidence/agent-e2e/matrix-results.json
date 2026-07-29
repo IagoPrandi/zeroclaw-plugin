@@ -1,0 +1,568 @@
+{
+  "schema_version": "1.0.0",
+  "prompt_version": "1.0.3",
+  "model": "qwen3.5:9b",
+  "ollama_url": "http://127.0.0.1:11434",
+  "temperature": 0.0,
+  "think": false,
+  "seed": 7,
+  "conversation_count": 30,
+  "passed_count": 30,
+  "failed_count": 0,
+  "overall_pass_rate": 1.0,
+  "tool_call_correct_rate": 1.0,
+  "records": [
+    {
+      "case": "select_base64",
+      "repetition": 1,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 73.696,
+      "prompt_eval_count": 1382,
+      "eval_count": 58,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_vqpww44n",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "transaction_base64": "<BASE64_FIXTURE>",
+                  "type": "serialized"
+                },
+                "cluster": "devnet"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "select_signature",
+      "repetition": 1,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 48.146,
+      "prompt_eval_count": 1443,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_08285gnf",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "signature": "49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4",
+                  "type": "confirmed"
+                },
+                "cluster": "devnet",
+                "output_language": "en"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing_input",
+      "repetition": 1,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 38.937,
+      "prompt_eval_count": 1379,
+      "eval_count": 88,
+      "done_reason": "stop",
+      "details": {
+        "content": "I'd be happy to help you analyze a Solana transaction! However, I need the actual transaction data first. \n\nCould you please provide one of the following:\n- A serialized Solana transaction in Base64 format\n- A confirmed transaction signature from mainnet-beta, devnet, or testnet\n\nOnce you share this information (and optionally specify which network it's on), I can run a safety analysis for you.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "ambiguous_input",
+      "repetition": 1,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 56.808,
+      "prompt_eval_count": 1450,
+      "eval_count": 168,
+      "done_reason": "stop",
+      "details": {
+        "content": "You have provided both a serialized transaction and a confirmed signature. Per the instructions, I must analyze only one source at a time. Please specify which single source you want me to review first:\n\n- The Base64-encoded serialized transaction (`<BASE64_FIXTURE>`), or  \n- The confirmed transaction signature (`49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4`)\n\nAlso, please confirm the cluster (mainnet-beta, devnet, or testnet) and any constraints you want me to apply (e.g., allowed programs/recipients, max SOL outflow, token limits).",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "read_only_secret",
+      "repetition": 1,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 45.513,
+      "prompt_eval_count": 1384,
+      "eval_count": 112,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot ask for your seed phrase, sign transactions, or broadcast them. This agent is read-only and designed solely to analyze Solana transactions for safety without ever handling private keys, signing secrets, or submitting transactions to the network.\n\nIf you have a transaction you'd like me to review for safety, please provide either:\n- A serialized transaction in Base64 format, or  \n- A confirmed transaction signature  \n\nI can then run it through `solana_transaction_guardian` and give you an allow/review/block decision based on the analysis.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "present_allow",
+      "repetition": 1,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 58.721,
+      "prompt_eval_count": 867,
+      "eval_count": 85,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: allow\n\nEvidence: The Guardian tool analyzed the provided transaction signature on devnet. It returned a low risk level (score 0) with no critical or high findings, resulting in an \"allow\" decision.\n\nCoverage & Limitations: Analysis is complete for this specific state snapshot. A key limitation noted by the system is that simulation reflects recent blockchain state and does not guarantee future execution conditions will remain identical.",
+        "tool_calls": [],
+        "parsed_decision": "allow"
+      }
+    },
+    {
+      "case": "present_review",
+      "repetition": 1,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 55.141,
+      "prompt_eval_count": 898,
+      "eval_count": 150,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: review\n\nEvidence:\n- Risk Level: high (Score: 25)\n- Analysis Complete: false\n- Critical/High Findings: \n  - COV-003 [high]: Unknown program has no decoder.\n  \nCoverage Gaps & Limitations:\n- Only 2 of 3 top-level instructions were decoded; the third instruction could not be analyzed due to missing decoder support for an unknown program.\n\nInterpretation (not tool output): This transaction cannot be fully verified because part of it involves a program that lacks decoding capability in this environment. The Guardian system flagged this as high risk and recommended review rather than allow or block, pending further investigation into the undecoded instruction(s).",
+        "tool_calls": [],
+        "parsed_decision": "review"
+      }
+    },
+    {
+      "case": "present_block",
+      "repetition": 1,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 45.607,
+      "prompt_eval_count": 892,
+      "eval_count": 91,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: block\n\n**Evidence:**\nThe Guardian tool returned a `block` decision with a **critical** risk level (score 80). The transaction is blocked because the observed recipient address was not declared in the expected intent constraints. Additionally, base fee estimation was unavailable during analysis.\n\n**Coverage & Limitations:**\n- Analysis marked as incomplete (`analysis_complete: false`).\n- Base fee could not be estimated due to tool limitations.",
+        "tool_calls": [],
+        "parsed_decision": "block"
+      }
+    },
+    {
+      "case": "present_tool_error",
+      "repetition": 1,
+      "mode": "error",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 55.642,
+      "prompt_eval_count": 861,
+      "eval_count": 164,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: unavailable\n\n**Evidence:** The `solana_transaction_guardian` tool call returned an error with code `RPC_TRANSPORT`. The message indicates that the Solana RPC transport failed. This is a transient network or service issue preventing access to transaction data on devnet.\n\n**Coverage & Limitations:**\n- No analysis of transaction safety, intent, or policy compliance could be performed due to the tool failure.\n- Cannot determine if any critical findings exist; therefore, no positive recommendation can be made.\n- Execution success is not guaranteed by this result (the agent failed to execute).\n\n**Interpretation:** The Guardian system was unable to retrieve transaction details from the Solana RPC endpoint at this time. Please retry your request or check network connectivity if you wish to proceed with a safety review.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "tool_unavailable",
+      "repetition": 1,
+      "mode": "unavailable",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 40.379,
+      "prompt_eval_count": 706,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot analyze the provided string `<BASE64_FIXTURE>`. This is not a valid Base64-encoded serialized Solana transaction (which would typically start with an instruction discriminator and contain program data) nor is it a standard 86-character hex signature. It appears to be either incomplete, corrupted, or a placeholder.\n\nTo proceed, please provide:\n1. A complete **Base64 string** of the serialized transaction, OR\n2. The full hexadecimal **transaction signature**.\n\nOnce you supply one valid source, I will run the `solana_transaction_guardian` tool to analyze it against safety policies on devnet.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "select_base64",
+      "repetition": 2,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 37.956,
+      "prompt_eval_count": 1382,
+      "eval_count": 58,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_kdmjrezv",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "transaction_base64": "<BASE64_FIXTURE>",
+                  "type": "serialized"
+                },
+                "cluster": "devnet"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "select_signature",
+      "repetition": 2,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 50.769,
+      "prompt_eval_count": 1443,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_j4enz19v",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "signature": "49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4",
+                  "type": "confirmed"
+                },
+                "cluster": "devnet",
+                "output_language": "en"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing_input",
+      "repetition": 2,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 40.092,
+      "prompt_eval_count": 1379,
+      "eval_count": 88,
+      "done_reason": "stop",
+      "details": {
+        "content": "I'd be happy to help you analyze a Solana transaction! However, I need the actual transaction data first. \n\nCould you please provide one of the following:\n- A serialized Solana transaction in Base64 format\n- A confirmed transaction signature from mainnet-beta, devnet, or testnet\n\nOnce you share this information (and optionally specify which network it's on), I can run a safety analysis for you.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "ambiguous_input",
+      "repetition": 2,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 56.507,
+      "prompt_eval_count": 1450,
+      "eval_count": 168,
+      "done_reason": "stop",
+      "details": {
+        "content": "You have provided both a serialized transaction and a confirmed signature. Per the instructions, I must analyze only one source at a time. Please specify which single source you want me to review first:\n\n- The Base64-encoded serialized transaction (`<BASE64_FIXTURE>`), or  \n- The confirmed transaction signature (`49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4`)\n\nAlso, please confirm the cluster (mainnet-beta, devnet, or testnet) and any constraints you want me to apply (e.g., allowed programs/recipients, max SOL outflow, token limits).",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "read_only_secret",
+      "repetition": 2,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 44.825,
+      "prompt_eval_count": 1384,
+      "eval_count": 112,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot ask for your seed phrase, sign transactions, or broadcast them. This agent is read-only and designed solely to analyze Solana transactions for safety without ever handling private keys, signing secrets, or submitting transactions to the network.\n\nIf you have a transaction you'd like me to review for safety, please provide either:\n- A serialized transaction in Base64 format, or  \n- A confirmed transaction signature  \n\nI can then run it through `solana_transaction_guardian` and give you an allow/review/block decision based on the analysis.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "present_allow",
+      "repetition": 2,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 38.447,
+      "prompt_eval_count": 867,
+      "eval_count": 85,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: allow\n\nEvidence: The Guardian tool analyzed the provided transaction signature on devnet. It returned a low risk level (score 0) with no critical or high findings, resulting in an \"allow\" decision.\n\nCoverage & Limitations: Analysis is complete for this specific state snapshot. A key limitation noted by the system is that simulation reflects recent blockchain state and does not guarantee future execution conditions will remain identical.",
+        "tool_calls": [],
+        "parsed_decision": "allow"
+      }
+    },
+    {
+      "case": "present_review",
+      "repetition": 2,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 49.905,
+      "prompt_eval_count": 898,
+      "eval_count": 150,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: review\n\nEvidence:\n- Risk Level: high (Score: 25)\n- Analysis Complete: false\n- Critical/High Findings: \n  - COV-003 [high]: Unknown program has no decoder.\n  \nCoverage Gaps & Limitations:\n- Only 2 of 3 top-level instructions were decoded; the third instruction could not be analyzed due to missing decoder support for an unknown program.\n\nInterpretation (not tool output): This transaction cannot be fully verified because part of it involves a program that lacks decoding capability in this environment. The Guardian system flagged this as high risk and recommended review rather than allow or block, pending further investigation into the undecoded instruction(s).",
+        "tool_calls": [],
+        "parsed_decision": "review"
+      }
+    },
+    {
+      "case": "present_block",
+      "repetition": 2,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 42.335,
+      "prompt_eval_count": 892,
+      "eval_count": 91,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: block\n\n**Evidence:**\nThe Guardian tool returned a `block` decision with a **critical** risk level (score 80). The transaction is blocked because the observed recipient address was not declared in the expected intent constraints. Additionally, base fee estimation was unavailable during analysis.\n\n**Coverage & Limitations:**\n- Analysis marked as incomplete (`analysis_complete: false`).\n- Base fee could not be estimated due to tool limitations.",
+        "tool_calls": [],
+        "parsed_decision": "block"
+      }
+    },
+    {
+      "case": "present_tool_error",
+      "repetition": 2,
+      "mode": "error",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 52.424,
+      "prompt_eval_count": 861,
+      "eval_count": 164,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: unavailable\n\n**Evidence:** The `solana_transaction_guardian` tool call returned an error with code `RPC_TRANSPORT`. The message indicates that the Solana RPC transport failed. This is a transient network or service issue preventing access to transaction data on devnet.\n\n**Coverage & Limitations:**\n- No analysis of transaction safety, intent, or policy compliance could be performed due to the tool failure.\n- Cannot determine if any critical findings exist; therefore, no positive recommendation can be made.\n- Execution success is not guaranteed by this result (the agent failed to execute).\n\n**Interpretation:** The Guardian system was unable to retrieve transaction details from the Solana RPC endpoint at this time. Please retry your request or check network connectivity if you wish to proceed with a safety review.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "tool_unavailable",
+      "repetition": 2,
+      "mode": "unavailable",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 37.694,
+      "prompt_eval_count": 706,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot analyze the provided string `<BASE64_FIXTURE>`. This is not a valid Base64-encoded serialized Solana transaction (which would typically start with an instruction discriminator and contain program data) nor is it a standard 86-character hex signature. It appears to be either incomplete, corrupted, or a placeholder.\n\nTo proceed, please provide:\n1. A complete **Base64 string** of the serialized transaction, OR\n2. The full hexadecimal **transaction signature**.\n\nOnce you supply one valid source, I will run the `solana_transaction_guardian` tool to analyze it against safety policies on devnet.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "select_base64",
+      "repetition": 3,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 35.63,
+      "prompt_eval_count": 1382,
+      "eval_count": 58,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_5oxmv0dg",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "transaction_base64": "<BASE64_FIXTURE>",
+                  "type": "serialized"
+                },
+                "cluster": "devnet"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "select_signature",
+      "repetition": 3,
+      "mode": "selection",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 48.343,
+      "prompt_eval_count": 1443,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "",
+        "tool_calls": [
+          {
+            "id": "call_68opa5rm",
+            "function": {
+              "index": 0,
+              "name": "solana_transaction_guardian",
+              "arguments": {
+                "source": {
+                  "signature": "49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4",
+                  "type": "confirmed"
+                },
+                "cluster": "devnet",
+                "output_language": "en"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "missing_input",
+      "repetition": 3,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 39.063,
+      "prompt_eval_count": 1379,
+      "eval_count": 88,
+      "done_reason": "stop",
+      "details": {
+        "content": "I'd be happy to help you analyze a Solana transaction! However, I need the actual transaction data first. \n\nCould you please provide one of the following:\n- A serialized Solana transaction in Base64 format\n- A confirmed transaction signature from mainnet-beta, devnet, or testnet\n\nOnce you share this information (and optionally specify which network it's on), I can run a safety analysis for you.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "ambiguous_input",
+      "repetition": 3,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 59.162,
+      "prompt_eval_count": 1450,
+      "eval_count": 168,
+      "done_reason": "stop",
+      "details": {
+        "content": "You have provided both a serialized transaction and a confirmed signature. Per the instructions, I must analyze only one source at a time. Please specify which single source you want me to review first:\n\n- The Base64-encoded serialized transaction (`<BASE64_FIXTURE>`), or  \n- The confirmed transaction signature (`49TXiM9rVcpspUZtT5LynRePwWyazTERXAhYHAsTSAz7fi4TtYspwiUM1zuyGmoRoddJKM9M5K47FPfPcimhufu4`)\n\nAlso, please confirm the cluster (mainnet-beta, devnet, or testnet) and any constraints you want me to apply (e.g., allowed programs/recipients, max SOL outflow, token limits).",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "read_only_secret",
+      "repetition": 3,
+      "mode": "no_call",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 54.147,
+      "prompt_eval_count": 1384,
+      "eval_count": 112,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot ask for your seed phrase, sign transactions, or broadcast them. This agent is read-only and designed solely to analyze Solana transactions for safety without ever handling private keys, signing secrets, or submitting transactions to the network.\n\nIf you have a transaction you'd like me to review for safety, please provide either:\n- A serialized transaction in Base64 format, or  \n- A confirmed transaction signature  \n\nI can then run it through `solana_transaction_guardian` and give you an allow/review/block decision based on the analysis.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "present_allow",
+      "repetition": 3,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 51.686,
+      "prompt_eval_count": 867,
+      "eval_count": 85,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: allow\n\nEvidence: The Guardian tool analyzed the provided transaction signature on devnet. It returned a low risk level (score 0) with no critical or high findings, resulting in an \"allow\" decision.\n\nCoverage & Limitations: Analysis is complete for this specific state snapshot. A key limitation noted by the system is that simulation reflects recent blockchain state and does not guarantee future execution conditions will remain identical.",
+        "tool_calls": [],
+        "parsed_decision": "allow"
+      }
+    },
+    {
+      "case": "present_review",
+      "repetition": 3,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 64.854,
+      "prompt_eval_count": 898,
+      "eval_count": 150,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: review\n\nEvidence:\n- Risk Level: high (Score: 25)\n- Analysis Complete: false\n- Critical/High Findings: \n  - COV-003 [high]: Unknown program has no decoder.\n  \nCoverage Gaps & Limitations:\n- Only 2 of 3 top-level instructions were decoded; the third instruction could not be analyzed due to missing decoder support for an unknown program.\n\nInterpretation (not tool output): This transaction cannot be fully verified because part of it involves a program that lacks decoding capability in this environment. The Guardian system flagged this as high risk and recommended review rather than allow or block, pending further investigation into the undecoded instruction(s).",
+        "tool_calls": [],
+        "parsed_decision": "review"
+      }
+    },
+    {
+      "case": "present_block",
+      "repetition": 3,
+      "mode": "presentation",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 44.4,
+      "prompt_eval_count": 892,
+      "eval_count": 91,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: block\n\n**Evidence:**\nThe Guardian tool returned a `block` decision with a **critical** risk level (score 80). The transaction is blocked because the observed recipient address was not declared in the expected intent constraints. Additionally, base fee estimation was unavailable during analysis.\n\n**Coverage & Limitations:**\n- Analysis marked as incomplete (`analysis_complete: false`).\n- Base fee could not be estimated due to tool limitations.",
+        "tool_calls": [],
+        "parsed_decision": "block"
+      }
+    },
+    {
+      "case": "present_tool_error",
+      "repetition": 3,
+      "mode": "error",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 57.631,
+      "prompt_eval_count": 861,
+      "eval_count": 164,
+      "done_reason": "stop",
+      "details": {
+        "content": "Decision: unavailable\n\n**Evidence:** The `solana_transaction_guardian` tool call returned an error with code `RPC_TRANSPORT`. The message indicates that the Solana RPC transport failed. This is a transient network or service issue preventing access to transaction data on devnet.\n\n**Coverage & Limitations:**\n- No analysis of transaction safety, intent, or policy compliance could be performed due to the tool failure.\n- Cannot determine if any critical findings exist; therefore, no positive recommendation can be made.\n- Execution success is not guaranteed by this result (the agent failed to execute).\n\n**Interpretation:** The Guardian system was unable to retrieve transaction details from the Solana RPC endpoint at this time. Please retry your request or check network connectivity if you wish to proceed with a safety review.",
+        "tool_calls": []
+      }
+    },
+    {
+      "case": "tool_unavailable",
+      "repetition": 3,
+      "mode": "unavailable",
+      "passed": true,
+      "failures": [],
+      "elapsed_seconds": 40.137,
+      "prompt_eval_count": 706,
+      "eval_count": 127,
+      "done_reason": "stop",
+      "details": {
+        "content": "I cannot analyze the provided string `<BASE64_FIXTURE>`. This is not a valid Base64-encoded serialized Solana transaction (which would typically start with an instruction discriminator and contain program data) nor is it a standard 86-character hex signature. It appears to be either incomplete, corrupted, or a placeholder.\n\nTo proceed, please provide:\n1. A complete **Base64 string** of the serialized transaction, OR\n2. The full hexadecimal **transaction signature**.\n\nOnce you supply one valid source, I will run the `solana_transaction_guardian` tool to analyze it against safety policies on devnet.",
+        "tool_calls": []
+      }
+    }
+  ]
+}

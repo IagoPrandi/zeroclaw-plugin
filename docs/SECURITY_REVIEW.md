@@ -15,6 +15,14 @@ Date: 2026-07-29
   `expect_used = "deny"` are active. Repository scans found no `unsafe`,
   `unwrap`, `expect`, `panic!`, `todo!`, or `unimplemented!` in `src`.
 - Strict Clippy with all targets and all features passed.
+- Gitleaks 8.30.1 scanned a clean 544.8 KB project snapshot excluding only
+  `.git`, `.claude`, and generated `target` content: zero secrets.
+- Semgrep 1.164.0 ran 162 Rust, Python, and shell rules across 20 source and
+  harness files: zero findings and 100% parsed lines.
+- OSV-Scanner 2.3.8 scanned all 220 packages in `Cargo.lock`: zero
+  critical/high/medium/low vulnerabilities. It independently reported the
+  already documented, severity-unknown `RUSTSEC-2025-0141` maintenance
+  advisory with no fixed version.
 
 ## Manual review
 
@@ -46,3 +54,14 @@ host:
 - the optimized WASM remained below 1 MiB.
 
 Result: no critical security defect is open.
+
+## Local model and credential verification
+
+- The reference provider configuration contains only Ollama at
+  `127.0.0.1:11434`.
+- Runtime traces contained 41 localhost Ollama references and no OpenAI,
+  Anthropic, OpenRouter, Gemini, or Groq endpoint.
+- Repository scans found no provider API key, private-key block, or `sk-*`
+  credential.
+- A separate Ollama 0.32.0 container loaded the exact Qwen digest from a
+  read-only cache and returned `OK` while bound only to localhost.

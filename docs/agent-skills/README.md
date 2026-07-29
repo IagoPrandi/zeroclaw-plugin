@@ -14,3 +14,4 @@ skill would be premature or duplicate an existing skill.
 | M5 | Do not create | [`assessments/M5.md`](assessments/M5.md) |
 | M6 | Do not create | [`assessments/M6.md`](assessments/M6.md) |
 | M7 | Do not create | [`assessments/M7.md`](assessments/M7.md) |
+| M8 | Do not create | [`assessments/M8.md`](assessments/M8.md) |
