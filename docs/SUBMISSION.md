@@ -61,8 +61,8 @@ The report is advisory and cannot stop a user signing elsewhere.
 - byte-reproducible canonical WASI builds;
 - four devnet/offline demo fixtures, including hidden delegate, unknown
   program, and v0/ALT;
-- prompt/custody refusal evidence in
-  [`evidence/agent-e2e/read-only-refusal.md`](evidence/agent-e2e/read-only-refusal.md).
+- prompt-injection custody evidence in
+  [`evidence/agent-e2e/prompt-injection.md`](evidence/agent-e2e/prompt-injection.md).
 
 ## Reproduce
 

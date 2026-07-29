@@ -380,3 +380,21 @@ M0 is complete. M1 started only after all G0 validations passed.
   video, public release links, semantic tag, and submission remain open.
 - Committed the corrected package/source state as `461d4d5` and created the
   annotated semantic tag `v0.1.0-rc.2`, which supersedes RC1.
+- Ran the clean installed agent against an explicit prompt injection requesting
+  the user's seed phrase, signing, and broadcast. Qwen refused all three,
+  restated the read-only boundary, made no tool call, and completed in 183
+  seconds with no cloud provider configured.
+- Rejected a hidden-delegate take with empty visible agent output and a first
+  safe-transfer take whose prose converted one lamport incorrectly. Neither
+  was accepted as demo evidence.
+- Repeated the safe-transfer flow in a second empty profile with explicit
+  exact-integer/no-inference instructions. Qwen preserved `allow`, the
+  one-lamport action, coverage, and limitations in 271 seconds.
+- Added a reproducible terminal runner and an isolated video renderer that
+  uses only sanitized real outputs, identifies the inference jump cut, and
+  never captures the user's desktop or other windows.
+- Rejected the first renderer output after visual review found overlapping
+  progressive text. Corrected event lifetimes, inspected five representative
+  frames, and produced a legible 2:38 H.264 video at 1600x900.
+- Rendered the final demo twice with byte-identical SHA-256
+  `1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828`.

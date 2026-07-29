@@ -34,6 +34,15 @@ sha256  70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b
 The same values are recorded in the package `SHA256SUMS` and must be copied to
 the GitHub release notes without modification.
 
+The separate public-demo asset is deterministic:
+
+```text
+file      guardian-demo.mp4
+duration  158 seconds
+size      1333678 bytes
+sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
+```
+
 ## Signature
 
 The manifest is signed with the Ed25519 publisher key documented in
@@ -49,5 +58,7 @@ list is empty.
 - A clean ZeroClaw v0.8.3 profile installs, lists, and describes the plugin.
 - The installed package passes strict-signature discovery.
 - All four demo fixtures pass through the actual pinned host.
+- The sanitized terminal demo is H.264, 1600×900, 2:38, visually reviewed,
+  and reproduced byte-identically in two renders.
 
 The public release URL is added after the release assets are published.

@@ -55,3 +55,21 @@ host:
 | v0/ALT | `allow` | version `v0`; lookup table resolved |
 
 No private key, seed, signing path, or cloud LLM provider was involved.
+
+## Demo artifact
+
+The final terminal demo uses a real clean-profile Qwen/ZeroClaw transcript and
+actual host fixture results. Idle local inference is explicitly removed with
+a labeled jump cut; no desktop, private window, secret, or raw transaction is
+captured.
+
+```text
+file      guardian-demo.mp4
+duration  158 seconds
+format    H.264, 1600x900, yuv420p
+size      1333678 bytes
+sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
+```
+
+Five representative frames were visually reviewed for readability and
+content. A second render was byte-identical.
