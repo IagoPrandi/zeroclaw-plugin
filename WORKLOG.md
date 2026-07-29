@@ -378,3 +378,5 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Reviewed the package/source relationship after updating README content,
   rebuilt the archive, and marked only validated PRD items complete. Public
   video, public release links, semantic tag, and submission remain open.
+- Committed the corrected package/source state as `461d4d5` and created the
+  annotated semantic tag `v0.1.0-rc.2`, which supersedes RC1.

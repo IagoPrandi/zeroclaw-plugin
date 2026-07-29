@@ -2,6 +2,10 @@
 
 ## Canonical artifacts
 
+Source tag: `v0.1.0-rc.2`
+
+Source commit: `461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
+
 The release component is built in the pinned `rust:1.96.1-bookworm` image
 identified by:
 
@@ -46,5 +50,4 @@ list is empty.
 - The installed package passes strict-signature discovery.
 - All four demo fixtures pass through the actual pinned host.
 
-The semantic tag and public release URL are added after the source commit and
-release assets are published.
+The public release URL is added after the release assets are published.

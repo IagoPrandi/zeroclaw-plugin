@@ -2,6 +2,10 @@
 
 Date: 2026-07-29
 
+Source tag: `v0.1.0-rc.2`
+
+Source commit: `461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`
+
 ## Canonical component
 
 Two independent builds in the pinned `rust:1.96.1-bookworm` image, each with

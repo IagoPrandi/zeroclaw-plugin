@@ -10,8 +10,8 @@
 - Blockers: none.
 - Open risks: `bincode 1.3.3` is unmaintained with no compatible fixed release;
   the canonical release build must run in the pinned Linux container.
-- Last tagged commit: `96df5b1` (`v0.1.0-rc.1`); the corrected release state is
-  validated in the working tree and will receive a superseding tag.
+- Last tagged commit: `461d4d5` (`v0.1.0-rc.2`), which supersedes RC1 after
+  the v0/ALT correction.
 - Last commands executed: two clean-container builds, deterministic packaging,
   clean ZeroClaw installation, strict-signature discovery, and the four-case
   demo-fixture host test.

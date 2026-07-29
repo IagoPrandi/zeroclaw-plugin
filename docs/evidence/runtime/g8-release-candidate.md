@@ -29,3 +29,12 @@ Date: 2026-07-29
 - Limitations are explicit in `docs/LIMITATIONS.md`.
 
 Result: Gate G8 passed; M9 may begin.
+
+## Superseding release candidate
+
+The RC1 evidence above remains the historical G8 approval record. M9 demo
+validation later exposed and corrected an RPC-backed v0/ALT lookup reuse bug.
+The current candidate is `v0.1.0-rc.2` at
+`461d4d5ad7cb65bd919bdf5875e28812a3f5f8dc`, with 60 native tests and
+canonical WASM SHA-256
+`780d7a88aa09eadcb345a7bfa6fd58e80cd93de27baa425d71439d6987e5c7e5`.
