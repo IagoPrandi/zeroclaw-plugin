@@ -1,0 +1,8 @@
+name = "solana-transaction-guardian"
+version = "0.1.0"
+description = "Read-only Solana transaction analysis and policy evaluation for ZeroClaw"
+author = "Solana Transaction Guardian contributors"
+wasm_path = "solana_transaction_guardian.wasm"
+capabilities = ["tool"]
+permissions = ["config_read", "http_client"]
+

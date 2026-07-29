@@ -1,0 +1,52 @@
+# Sanitized M0 compatibility configuration for ZeroClaw v0.8.3.
+# This file intentionally configures no remote model provider or fallback.
+schema_version = 3
+
+[providers.models.ollama.local]
+uri = "http://127.0.0.1:11434"
+model = "qwen3.5:9b"
+num_ctx = 8192
+temperature = 0.0
+think = false
+timeout_secs = 600
+max_tokens = 1000
+
+[agents.guardian]
+model_provider = "ollama.local"
+risk_profile = "guardian"
+runtime_profile = "guardian_local"
+
+[risk_profiles.guardian]
+level = "full"
+allowed_tools = ["solana_transaction_guardian"]
+
+[runtime_profiles.guardian_local]
+agentic = true
+compact_context = true
+strict_tool_parsing = true
+max_tool_iterations = 4
+max_actions_per_hour = 10
+max_cost_per_day_cents = 100
+agentic_timeout_secs = 600
+max_history_messages = 10
+
+[plugins]
+enabled = true
+
+[plugins.security]
+signature_mode = "disabled"
+
+[[plugins.entries]]
+name = "solana-transaction-guardian"
+
+[plugins.entries.config]
+rpc_endpoints_json = "{\"devnet\":\"https://api.devnet.solana.com\"}"
+allowed_clusters_json = "[\"devnet\"]"
+request_timeout_ms = "5000"
+max_rpc_calls = "8"
+max_http_response_bytes = "2097152"
+max_transaction_bytes = "1232"
+max_output_bytes = "262144"
+fail_closed = "true"
+enable_simulation = "true"
+policy_version = "default-1"

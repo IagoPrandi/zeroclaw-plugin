@@ -1,4 +1,0 @@
-interface:
-  display_name: "Idealer UI Coherence"
-  short_description: "Preserve Idealer visual identity"
-  default_prompt: "Use $idealer-ui-coherence before extending any Idealer screen or component."

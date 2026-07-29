@@ -1,0 +1,12 @@
+package zeroclaw:plugin@0.1.0;
+
+/// Self-identification interface exported by all ZeroClaw plugin types.
+@unstable(feature = plugins-wit-v0)
+interface plugin-info {
+    /// Return the plugin's canonical name as declared by the plugin itself.
+    plugin-name: func() -> string;
+
+    /// Return the plugin's version string as declared by the plugin itself.
+    plugin-version: func() -> string;
+}
+

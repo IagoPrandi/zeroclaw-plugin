@@ -1,0 +1,15 @@
+# Negative M0 test: the only model endpoint is deliberately unavailable.
+schema_version = 3
+
+[providers.models.ollama.unavailable]
+uri = "http://127.0.0.1:1"
+model = "qwen3.5:9b"
+think = false
+timeout_secs = 2
+
+[agents.guardian]
+model_provider = "ollama.unavailable"
+risk_profile = "guardian"
+
+[risk_profiles.guardian]
+level = "full"

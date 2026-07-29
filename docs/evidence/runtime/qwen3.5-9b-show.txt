@@ -1,0 +1,18 @@
+Model
+  architecture: qwen35
+  parameters: 9.7B
+  context length: 262144
+  embedding length: 4096
+  quantization: Q4_K_M
+  requires: Ollama 0.17.1
+
+Capabilities
+  completion
+  vision
+  tools
+  thinking
+
+Local tag: qwen3.5:9b
+Local model ID: 6488c96fa5fa
+Installed size: 6.6 GB
+
