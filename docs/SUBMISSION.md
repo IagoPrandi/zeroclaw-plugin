@@ -83,6 +83,25 @@ and fail closed under the reference policy. Qwen presentation remains
 probabilistic; the WASM JSON report is authoritative. See
 [`LIMITATIONS.md`](LIMITATIONS.md).
 
+## Copy-ready Discord showcase
+
+The text below is ready for the ZeroClaw Discord `#solana-bounty` channel:
+
+```text
+Solana Transaction Guardian — a read-only transaction firewall for ZeroClaw
+
+Built for Solana users, treasury operators, developers, and agents who need to understand a transaction before trusting it. A real ZeroClaw v0.8.3 agent running local Ollama/qwen3.5:9b calls a signed Rust/WASM tool that decodes or simulates legacy/v0 transactions, resolves ALTs, compares structured intent, and applies 54 deterministic risk rules. The plugin—not LLM prose—owns the canonical allow/review/block decision.
+
+The demo covers a safe transfer, a hidden SPL delegate, an unknown program, and v0/ALT resolution. Custody is T0/read-only: no private keys, signing, mutation, broadcast, filesystem, or cloud LLM fallback. Unknown programs and missing critical evidence fail closed. Reproducibility includes a pinned host/model, signed manifest, public SHA-256 values, clean-profile install, 60 tests, and prompt-injection evidence.
+
+Demo (2:38): https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4
+Repository: https://github.com/IagoPrandi/zeroclaw-plugin
+Release: https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0
+Setup and complete write-up: https://github.com/IagoPrandi/zeroclaw-plugin/blob/main/docs/SUBMISSION.md
+Prompt-injection transcript: https://github.com/IagoPrandi/zeroclaw-plugin/blob/main/docs/evidence/agent-e2e/prompt-injection.md
+Limitations: https://github.com/IagoPrandi/zeroclaw-plugin/blob/main/docs/LIMITATIONS.md
+```
+
 ## Links
 
 - Repository: <https://github.com/IagoPrandi/zeroclaw-plugin>

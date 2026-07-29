@@ -50,7 +50,7 @@ transaction-review workflow, not presented as a component in isolation.
 - One-pager link (optional).
 - Supporting material (required).
 
-The final review found the listing open with 65 submissions. The substantive
+The final review found the listing open with 70 submissions. The substantive
 requirements, deadline, scoring, disqualifiers, and custody guidance were
 unchanged from the initial review.
 

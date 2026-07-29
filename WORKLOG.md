@@ -448,6 +448,14 @@ M0 is complete. M1 started only after all G0 validations passed.
   prepared materials. The only incomplete M9/G9 action is the authenticated
   showcase post in the ZeroClaw Discord `#solana-bounty` channel and any
   associated competition form submission.
+- Reopened the live listing after publication; it remained open with 70
+  submissions. The anonymous page exposes `Submit Now`, but completing the
+  showcase and form requires authenticated Discord and Superteam sessions.
+- Attempted the available browser-automation workflow to inspect those
+  sessions, but its required CLI is not installed and no Discord/Superteam
+  connector is available. No external post or form was fabricated.
+- Added a final copy-ready Discord showcase with the public demo, repository,
+  release, complete write-up, prompt-injection evidence, and limitations.
 - Reviewed source-tag provenance, published hashes, direct links, milestone
   checkboxes, and the remaining external-account boundary before updating
   the PRD and progress tracker.
