@@ -18,7 +18,7 @@ change the canonical decision.
 
 [Download v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0)
 ·
-[Watch the 2:38 public demo](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4)
+[Watch the 2:46 phone-and-terminal walkthrough](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4)
 
 ## Why it exists
 

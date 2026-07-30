@@ -459,3 +459,33 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Reviewed source-tag provenance, published hashes, direct links, milestone
   checkboxes, and the remaining external-account boundary before updating
   the PRD and progress tracker.
+
+## 2026-07-29 — Comparative review: Solana Rent Cleaner
+
+- Opened the required `PRD.md` and the local `.claude/skills/solana-dev/SKILL.md`
+  before reviewing the current project and
+  `con4ig/zeroclaw-solana-rent-cleaner`.
+- Compared the published source, manifest, schema, tests, scope, custody model,
+  and delivery evidence. No product source, release artifact, milestone, or
+  progress-tracker state was changed.
+- The current Windows Rust host-test command could not run for either project
+  because the local MSVC `link.exe` setup rejects Rust object-file arguments
+  before either crate is compiled. This is an environment limitation, not a
+  comparison result; the project's existing pinned-container evidence remains
+  the applicable build evidence.
+
+## 2026-07-29 â€” Phone-and-terminal walkthrough
+
+- Opened the required `PRD.md` and reviewed the local skill inventory before
+  replacing the difficult-to-read terminal-only video renderer.
+- Rebuilt `demo/render_video.py` as a 1920x1080, 166-second walkthrough:
+  phone-style sanitized operator/Guardian exchanges appear beside the exact
+  deterministic terminal evidence for safe transfer, hidden delegate, unknown
+  program, and v0/ALT scenarios.
+- Labelled the phone side as a reconstruction of recorded agent exchanges so
+  it does not misrepresent an unconfigured third-party channel as a live one.
+- Rendered and visually inspected the final asset at safe-transfer, hidden
+  delegate, unknown-program, and closing-evidence timestamps. The final
+  SHA-256 is `6128d6ae884f9d402d603215bd16e18ee9b03f7108a79360d69ccff6c2454018`.
+- Uploaded `guardian-demo-walkthrough.mp4` to the public `v0.1.0` release and
+  verified GitHub reports the identical digest and 2,186,278-byte size.

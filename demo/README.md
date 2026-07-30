@@ -26,18 +26,18 @@ table rather than suppressing the failure.
 
 The spoken walkthrough is in [DEMO_SCRIPT.md](DEMO_SCRIPT.md).
 
-For a terminal-only recording, run the real agent with
-[`run_demo.ps1`](run_demo.ps1), review the sanitized transcript, and render the
-validated story with:
+For a phone-and-terminal walkthrough, run the real agent with
+[`run_demo.ps1`](run_demo.ps1), review the sanitized transcript, and render
+the validated story with:
 
 ```bash
-python demo/render_video.py --output dist/0.1.0/guardian-demo.mp4
+python demo/render_video.py --output dist/0.1.0/guardian-demo-walkthrough.mp4
 ```
 
-The rendered video identifies the removed idle-inference interval and never
-captures the desktop, private windows, credentials, or raw transaction bytes.
-The validated release render is 2:38, H.264 at 1600×900, with SHA-256
-`1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828`.
+The renderer presents a labelled phone-style reconstruction of the sanitized,
+recorded agent exchanges alongside the terminal's deterministic evidence. It
+does not claim to be a live third-party chat channel. It never captures the
+desktop, private windows, credentials, or raw transaction bytes.
 
-Watch or download the
-[public demo](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4).
+Watch or download the phone-and-terminal walkthrough at
+[GitHub](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4).

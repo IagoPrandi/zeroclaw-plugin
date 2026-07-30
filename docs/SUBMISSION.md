@@ -94,7 +94,7 @@ Built for Solana users, treasury operators, developers, and agents who need to u
 
 The demo covers a safe transfer, a hidden SPL delegate, an unknown program, and v0/ALT resolution. Custody is T0/read-only: no private keys, signing, mutation, broadcast, filesystem, or cloud LLM fallback. Unknown programs and missing critical evidence fail closed. Reproducibility includes a pinned host/model, signed manifest, public SHA-256 values, clean-profile install, 60 tests, and prompt-injection evidence.
 
-Demo (2:38): https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4
+Demo (2:46, phone-and-terminal walkthrough): https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4
 Repository: https://github.com/IagoPrandi/zeroclaw-plugin
 Release: https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0
 Setup and complete write-up: https://github.com/IagoPrandi/zeroclaw-plugin/blob/main/docs/SUBMISSION.md
@@ -106,8 +106,8 @@ Limitations: https://github.com/IagoPrandi/zeroclaw-plugin/blob/main/docs/LIMITA
 
 - Repository: <https://github.com/IagoPrandi/zeroclaw-plugin>
 - Release: <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
-- Public demo (2:38):
-  <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>
+- Public phone-and-terminal walkthrough (2:46):
+  <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4>
 - Release archive:
   <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip>
 - Installation: [`INSTALLATION.md`](INSTALLATION.md)

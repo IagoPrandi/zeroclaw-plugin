@@ -48,6 +48,17 @@ size      1333678 bytes
 sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
 ```
 
+The recommended public walkthrough is a readable phone-and-terminal
+reconstruction of sanitized, recorded agent exchanges and their corresponding
+deterministic evidence:
+
+```text
+file      guardian-demo-walkthrough.mp4
+duration  166 seconds
+size      2186278 bytes
+sha256    6128d6ae884f9d402d603215bd16e18ee9b03f7108a79360d69ccff6c2454018
+```
+
 ## Signature
 
 The manifest is signed with the Ed25519 publisher key documented in
@@ -63,14 +74,16 @@ list is empty.
 - A clean ZeroClaw v0.8.3 profile installs, lists, and describes the plugin.
 - The installed package passes strict-signature discovery.
 - All four demo fixtures pass through the actual pinned host.
+- The recommended walkthrough is H.264, 1920x1080, 2:46, visually reviewed
+  across `allow`, `block`, and final-evidence scenes.
 - The sanitized terminal demo is H.264, 1600×900, 2:38, visually reviewed,
   and reproduced byte-identically in two renders.
 
 Public release:
 <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
 
-Public demo:
-<https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>
+Public walkthrough:
+<https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4>
 
 ## Public download verification
 
@@ -88,3 +101,7 @@ local validated artifacts and GitHub's asset metadata exactly:
 
 The repository, release page, and all five direct asset URLs returned HTTP
 200 without authentication.
+
+The walkthrough was added after the original release verification. GitHub's
+release API reports the same 2,186,278-byte size and SHA-256 as the local
+artifact, and its public download URL resolves without authentication.

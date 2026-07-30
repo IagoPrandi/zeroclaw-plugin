@@ -17,7 +17,7 @@ pode alterar a decisão canônica.
 
 [Baixar v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0)
 ·
-[Assistir à demo pública de 2:38](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4)
+[Assistir ao walkthrough de 2:46 com telefone e terminal](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4)
 
 ## Por que ele existe
 

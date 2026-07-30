@@ -9,6 +9,8 @@ All notable changes follow semantic versioning.
   checksums.
 - Added the validated 2:38 terminal demo, clean-install evidence,
   prompt-injection transcript, submission one-pager, and final security review.
+- Added a 2:46 public phone-and-terminal walkthrough based on sanitized,
+  recorded agent exchanges and matching deterministic terminal evidence.
 
 ## 0.1.0-rc.2 - 2026-07-29
 
