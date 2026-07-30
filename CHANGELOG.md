@@ -2,6 +2,17 @@
 
 All notable changes follow semantic versioning.
 
+## Unreleased
+
+- Made the plugin independent of the ZeroClaw model/provider selected by the
+  user; Ollama/Qwen remains reference evidence only.
+- Added explicit, fail-closed devnet defaults so a plugin entry is not needed
+  for first use.
+- Added a PowerShell package installer that preserves an existing ZeroClaw
+  profile and model choice, plus installer coverage.
+- Reworked installation and configuration guidance around zero-config devnet
+  use and opt-in mainnet/RPC/policy customization.
+
 ## 0.1.0 - 2026-07-29
 
 - Promoted the corrected RC2 component to the first stable release.

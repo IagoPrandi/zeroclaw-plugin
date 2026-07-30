@@ -1,4 +1,9 @@
-# Local LLM runtime
+# Reference LLM runtime
+
+This document records the reproducible environment used for the published
+demonstration and behavior evidence. It is not required to install or use
+Guardian. Guardian does not configure an LLM; it uses the model/provider
+already selected in the user's ZeroClaw profile.
 
 ## Pinned runtime
 
@@ -65,12 +70,14 @@ The versioned system prompt is
 matrix passed 30/30 conversations; raw results are under
 `docs/evidence/agent-e2e/`.
 
-## Failure behavior
+## Reference failure behavior
 
-There is no cloud fallback. If Ollama is unreachable, the model is absent, or
-the tool is unavailable, the flow must stop with an actionable diagnostic.
-Adding a cloud provider or automatic model substitution invalidates the
-reference evidence and requires a new ADR plus a full behavior rerun.
+The reference profile intentionally has no cloud fallback. If Ollama is
+unreachable, the model is absent, or the tool is unavailable, that reference
+flow stops with an actionable diagnostic. Users may select another provider or
+model for their own ZeroClaw profile; doing so does not alter the Guardian WASM
+or its deterministic security decision. It does require separate tool-calling
+validation before claiming equivalent presentation behavior.
 
 Local inference is probabilistic and can be slow on CPU-only hardware. It is a
 presentation layer, not the risk engine. Always treat the plugin JSON as

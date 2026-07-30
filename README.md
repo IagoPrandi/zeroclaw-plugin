@@ -7,9 +7,10 @@ returns one deterministic JSON report with actions, participants, balance
 deltas, fees, coverage, findings, and an `allow`, `review`, or `block`
 decision.
 
-The Rust/WASM plugin is the security authority. The local `qwen3.5:9b` model
-only selects the tool, builds arguments, and explains the report; it cannot
-change the canonical decision.
+The Rust/WASM plugin is the security authority. It works with the ZeroClaw
+agent and model the user already selected: the model can select the tool,
+build arguments, and explain the report, but it cannot change the canonical
+decision.
 
 > Custody tier T0: the Guardian has no private-key, signing, or transaction
 > submission capability.
@@ -46,59 +47,39 @@ See [risk rules](docs/RISK_RULES.md), [architecture](docs/ARCHITECTURE.md), and
 ```text
 User
   -> ZeroClaw v0.8.3
-     -> local Ollama 0.32.0 / qwen3.5:9b
+     -> user's configured model/provider
         -> solana_transaction_guardian (WASM)
-           -> configured Solana JSON-RPC
+           -> safe devnet RPC default or operator-configured Solana RPC
            -> deterministic report
         -> faithful presentation of that report
 ```
 
-There is no cloud LLM provider or fallback in the reference configuration.
-If Ollama or the pinned model is unavailable, the agent flow stops with an
-actionable error.
+Guardian neither selects nor configures an LLM provider. Ollama/Qwen is the
+reproducible reference environment only; it is not a prerequisite. See
+[LLM runtime evidence](docs/LLM_RUNTIME.md).
 
 ## Quick start
 
-Prerequisites:
+Prerequisites: a working ZeroClaw profile with the model/provider of the
+user's choice, plus a compatible Guardian release archive. Extract the
+archive and run its installer:
 
-- ZeroClaw v0.8.3 at commit
-  `24476b71d33eb1672a9495a7ce3d155377a60ce8`;
-- Ollama 0.32.0 listening on `127.0.0.1:11434`;
-- `qwen3.5:9b` with digest
-  `6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7`;
-- the
-  [v0.1.0 release archive](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip)
-  or Rust 1.96.1 with target `wasm32-wasip2`.
-
-```bash
-ollama pull qwen3.5:9b
-ollama list
+```powershell
+.\solana-transaction-guardian-<VERSION>\install-guardian.ps1 `
+  -PluginPath .\solana-transaction-guardian-<VERSION>
 ```
 
-Extract the release archive and install its plugin directory:
+No LLM configuration, prompt copy, or Guardian profile is needed. The default
+is ready for fail-closed devnet analysis. Then ask the user's existing agent:
 
 ```bash
-zeroclaw plugin install ./solana-transaction-guardian-0.1.0 \
-  --config-dir /path/to/guardian-profile
-zeroclaw plugin list --config-dir /path/to/guardian-profile
-```
-
-Copy [config/zeroclaw.guardian.example.toml](config/zeroclaw.guardian.example.toml)
-to the profile as `config.toml`, verify its publisher key against
-[docs/PUBLISHER_KEY.md](docs/PUBLISHER_KEY.md), and copy
-[prompts/GUARDIAN_SYSTEM.md](prompts/GUARDIAN_SYSTEM.md) to
-`agents/guardian/workspace/SOUL.md`. Then run:
-
-```bash
-zeroclaw agent --agent guardian \
-  --config-dir /path/to/guardian-profile \
+zeroclaw agent --agent <your-agent> \
   --message "Analyze this devnet transaction: <BASE64>"
 ```
 
-Use the full [installation guide](docs/INSTALLATION.md) for source builds,
-strict signature verification, platform-specific commands, and hash checks.
-Configuration and policy fields are documented in
-[docs/CONFIGURATION.md](docs/CONFIGURATION.md).
+Use the full [installation guide](docs/INSTALLATION.md) for strict signatures,
+source builds, and profile paths. Mainnet, private RPCs, and custom policies
+are opt-in and documented in [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Tool input
 
@@ -140,7 +121,7 @@ The v0.1.0 release passed:
 - clean locked `wasm32-wasip2` builds with byte-identical canonical output;
 - actual ZeroClaw fuel, 256 MiB memory, and strict-signature enforcement;
 - Gitleaks, Semgrep, OSV-Scanner, and RustSec review;
-- 30/30 controlled local-Qwen conversations with 100% decision preservation;
+- 30/30 controlled local-Qwen reference conversations with 100% decision preservation;
 - 20 live devnet analyses at 1,653 ms p95 under a six-RPC budget.
 
 Evidence is indexed in [docs/TEST_MATRIX.md](docs/TEST_MATRIX.md) and

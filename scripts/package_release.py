@@ -13,7 +13,12 @@ from pathlib import Path
 ARCHIVE_TIMESTAMP = (2026, 1, 1, 0, 0, 0)
 PLUGIN_NAME = "solana-transaction-guardian"
 WASM_NAME = "solana_transaction_guardian.wasm"
-PACKAGE_TEXT_FILES = ("manifest.toml", "README.md", "LICENSE")
+PACKAGE_FILES = {
+    "manifest.toml": "manifest.toml",
+    "README.md": "README.md",
+    "LICENSE": "LICENSE",
+    "install-guardian.ps1": "scripts/install-guardian.ps1",
+}
 
 
 def sha256(path: Path) -> str:
@@ -72,13 +77,13 @@ def main() -> int:
     archive_root = f"{PLUGIN_NAME}-{args.version}"
 
     with zipfile.ZipFile(archive_path, "x", allowZip64=False) as archive:
-        for source_name in PACKAGE_TEXT_FILES:
+        for archive_file_name, source_name in PACKAGE_FILES.items():
             source = root / source_name
             if not source.is_file():
                 raise SystemExit(f"required package file missing: {source_name}")
             write_zip_entry(
                 archive,
-                f"{archive_root}/{source_name}",
+                f"{archive_root}/{archive_file_name}",
                 source.read_bytes(),
             )
         write_zip_entry(

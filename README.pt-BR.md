@@ -6,9 +6,10 @@ confie nelas. Ele aceita uma transação serializada ou uma assinatura confirmad
 e retorna um relatório JSON determinístico com ações, participantes, deltas de
 saldo, taxas, cobertura, findings e uma decisão `allow`, `review` ou `block`.
 
-O plugin Rust/WASM é a autoridade de segurança. O modelo local `qwen3.5:9b`
-apenas seleciona o tool, monta os argumentos e apresenta o relatório; ele não
-pode alterar a decisão canônica.
+O plugin Rust/WASM é a autoridade de segurança. Ele funciona com o agente e o
+modelo que o usuário já escolheu no ZeroClaw: o modelo pode selecionar o tool,
+montar os argumentos e apresentar o relatório, mas não pode alterar a decisão
+canônica.
 
 > Custódia T0: o Guardian não possui chave privada nem capacidade de assinar ou
 > enviar transações.
@@ -42,65 +43,46 @@ Consulte [regras de risco](docs/RISK_RULES.md),
 [arquitetura](docs/ARCHITECTURE.md) e
 [limitações](docs/LIMITATIONS.md).
 
-## Execução local
+## Modelo de execução
 
 ```text
 Usuário
   -> ZeroClaw v0.8.3
-     -> Ollama 0.32.0 local / qwen3.5:9b
+     -> modelo/provider configurado pelo usuário
         -> solana_transaction_guardian (WASM)
-           -> JSON-RPC Solana configurado
+           -> RPC Solana devnet padrão ou configurado pelo operador
            -> relatório determinístico
         -> apresentação fiel do relatório
 ```
 
-A configuração de referência não possui provider de LLM cloud nem fallback.
-Se o Ollama ou o modelo fixado estiver indisponível, o fluxo é interrompido com
-um erro acionável.
+O Guardian não seleciona nem configura um provider de LLM. Ollama/Qwen é
+somente o ambiente de referência reproduzível; não é um pré-requisito. Veja
+[as evidências do runtime](docs/LLM_RUNTIME.md).
 
 ## Início rápido
 
-Pré-requisitos:
+Pré-requisitos: um perfil ZeroClaw funcional com o modelo/provider escolhido
+pelo usuário e uma release compatível do Guardian. Extraia o arquivo e rode o
+instalador incluído:
 
-- ZeroClaw v0.8.3 no commit
-  `24476b71d33eb1672a9495a7ce3d155377a60ce8`;
-- Ollama 0.32.0 em `127.0.0.1:11434`;
-- `qwen3.5:9b` com digest
-  `6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7`;
-- o
-  [arquivo da release v0.1.0](https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip)
-  ou Rust 1.96.1 com target `wasm32-wasip2`.
-
-```bash
-ollama pull qwen3.5:9b
-ollama list
+```powershell
+.\solana-transaction-guardian-<VERSION>\install-guardian.ps1 `
+  -PluginPath .\solana-transaction-guardian-<VERSION>
 ```
 
-Extraia a release e instale o diretório do plugin:
+Não é necessário configurar LLM, copiar prompt ou criar perfil Guardian. O
+padrão está pronto para análise devnet fail-closed. Em seguida, use o agente
+que o usuário já possui:
 
 ```bash
-zeroclaw plugin install ./solana-transaction-guardian-0.1.0 \
-  --config-dir /caminho/para/perfil-guardian
-zeroclaw plugin list --config-dir /caminho/para/perfil-guardian
-```
-
-Copie
-[config/zeroclaw.guardian.example.toml](config/zeroclaw.guardian.example.toml)
-como `config.toml` do perfil, confira a chave do publisher em
-[docs/PUBLISHER_KEY.md](docs/PUBLISHER_KEY.md) e copie
-[prompts/GUARDIAN_SYSTEM.md](prompts/GUARDIAN_SYSTEM.md) para
-`agents/guardian/workspace/SOUL.md`. Depois execute:
-
-```bash
-zeroclaw agent --agent guardian \
-  --config-dir /caminho/para/perfil-guardian \
+zeroclaw agent --agent <seu-agente> \
   --message "Analise esta transação devnet: <BASE64>"
 ```
 
-O [guia de instalação](docs/INSTALLATION.md) inclui build do source,
-verificação strict da assinatura, comandos por plataforma e hashes. A
-[referência de configuração](docs/CONFIGURATION.md) descreve política e
-limites.
+O [guia de instalação](docs/INSTALLATION.md) inclui assinaturas strict, build
+do source e perfis alternativos. Mainnet, RPC privado e políticas
+personalizadas são opt-in e estão em
+[CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Segurança e evidências
 

@@ -64,3 +64,24 @@ reduces latency, and keeps the model's role limited to tool selection,
 argument assembly, and faithful presentation. Prompt version 1.0.2 also
 requires a visible response and explicit mapping of observed wallets and
 declared intent constraints.
+
+## ADR-006 — Model-independent plugin onboarding
+
+- Status: accepted
+- Date: 2026-07-30
+- Supersedes: ADR-003 as a product-runtime requirement
+
+The Guardian WASM component does not call an LLM and must not configure one.
+It is installed into the ZeroClaw profile that the user already uses, so its
+tool is available to the existing provider, model, agent identity, and prompt.
+
+The former Ollama 0.32.0 / `qwen3.5:9b` lock remains valid only as the
+reproducible demonstration and behavior-test environment. It is not a product
+prerequisite and does not prevent users from choosing another compatible
+ZeroClaw model/provider.
+
+An empty Guardian configuration now has an explicit fail-closed devnet policy:
+the official devnet RPC, simulation, bounded requests, and conservative
+unknown-program/coverage effects. Mainnet, private RPC endpoints, and custom
+policy remain explicit operator choices. Supplied configuration continues to
+fail validation when malformed or unsafe.

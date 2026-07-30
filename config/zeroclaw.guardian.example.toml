@@ -1,38 +1,16 @@
-# ZeroClaw v0.8.3 reference profile. No cloud provider or fallback is defined.
-schema_version = 3
-
-[providers.models.ollama.local]
-uri = "http://127.0.0.1:11434"
-model = "qwen3.5:9b"
-num_ctx = 8192
-temperature = 0.0
-think = false
-timeout_secs = 600
-max_tokens = 1000
-
-[agents.guardian]
-model_provider = "ollama.local"
-risk_profile = "guardian"
-runtime_profile = "guardian_local"
-
-[risk_profiles.guardian]
-level = "full"
-allowed_tools = ["solana_transaction_guardian"]
-
-[runtime_profiles.guardian_local]
-agentic = true
-compact_context = true
-strict_tool_parsing = true
-max_tool_iterations = 4
-max_actions_per_hour = 10
-max_cost_per_day_cents = 100
-agentic_timeout_secs = 600
-max_history_messages = 10
+# Optional Guardian settings for an existing ZeroClaw profile.
+#
+# This file deliberately does not define an LLM provider, model, or agent.
+# Install the plugin into the ZeroClaw profile you already use; it will use that
+# agent's existing model. With no entry below, Guardian uses its safe devnet-only
+# defaults. Add this entry only to select a custom RPC endpoint, mainnet, or an
+# operator policy.
 
 [plugins]
 enabled = true
 
 [plugins.security]
+# Recommended when the profile requires signed plugins.
 signature_mode = "strict"
 trusted_publisher_keys = ["d743b2cd62da45564844b273760776c076642cec487700fdedfc601100e5c96d"]
 

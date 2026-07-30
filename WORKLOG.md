@@ -489,3 +489,28 @@ M0 is complete. M1 started only after all G0 validations passed.
   SHA-256 is `6128d6ae884f9d402d603215bd16e18ee9b03f7108a79360d69ccff6c2454018`.
 - Uploaded `guardian-demo-walkthrough.mp4` to the public `v0.1.0` release and
   verified GitHub reports the identical digest and 2,186,278-byte size.
+
+## 2026-07-30 — M9.5 model-independent onboarding
+
+- Opened the required `PRD.md`, inspected the local `.claude/skills` inventory,
+  and applied the relevant configuration-management and engineering guidance.
+- Reclassified Ollama 0.32.0 / `qwen3.5:9b` as reproducible reference evidence
+  rather than a product requirement. The Guardian WASM does not call, select,
+  or configure an LLM provider.
+- Added explicit safe defaults for an empty plugin configuration: the official
+  Solana devnet RPC, bounded requests, simulation, and fail-closed policy.
+  Supplied malformed values still fail closed with `INVALID_CONFIG`.
+- Added `install-guardian.ps1`, which validates a release directory/archive,
+  uses the existing ZeroClaw profile, installs and inspects the plugin, and
+  never writes the user's model, provider, agent, prompt, or credentials.
+- Added isolated installer coverage, optional configuration documentation,
+  an ADR, and English/pt-BR onboarding updates. The package generator now
+  includes the installer in future release archives.
+- Validated the PowerShell installer with a mocked ZeroClaw command, Python
+  package-script syntax, Markdown/TOML consistency checks, 61 native tests,
+  strict Clippy, and a `wasm32-wasip2` release build in the pinned Rust 1.96.1
+  Linux container. The local Windows Rust link step remains unavailable due to
+  its `link.exe` object-file incompatibility.
+- M9.5 is complete. A new signed release was intentionally not fabricated:
+  its version, manifest signature, checksums, and publication require the
+  operator's release authority.

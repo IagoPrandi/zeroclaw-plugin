@@ -13,8 +13,9 @@
 - Version 1 Solana transactions are rejected; the MVP supports legacy and v0.
 - Return data and logs are represented as bounded evidence, not trusted
   authorization.
-- `qwen3.5:9b` presentation is probabilistic even at temperature zero. The
-  deterministic WASM report remains authoritative.
+- LLM tool-calling and presentation behavior varies by provider and model.
+  `qwen3.5:9b` is the tested reference only; the deterministic WASM report
+  remains authoritative for every model.
 - CPU-only local inference on the reference host takes roughly 36–324 seconds
   per controlled turn/E2E flow.
 - The canonical Linux container build is bit-reproducible. Windows produces a

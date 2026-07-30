@@ -4,6 +4,15 @@ use serde::Deserialize;
 
 use crate::{address::Address32, error::GuardianError, limits::Limits};
 
+const DEFAULT_RPC_ENDPOINTS_JSON: &str = r#"{"devnet":"https://api.devnet.solana.com"}"#;
+const DEFAULT_ALLOWED_CLUSTERS_JSON: &str = r#"["devnet"]"#;
+const DEFAULT_REQUEST_TIMEOUT_MS: u64 = 5_000;
+const DEFAULT_MAX_RPC_CALLS: u16 = 6;
+const DEFAULT_MAX_HTTP_RESPONSE_BYTES: usize = 2_097_152;
+const DEFAULT_MAX_TRANSACTION_BYTES: usize = 1_232;
+const DEFAULT_MAX_OUTPUT_BYTES: usize = 262_144;
+const DEFAULT_POLICY_VERSION: &str = "default-1";
+
 #[derive(Clone, Debug)]
 pub struct GuardianConfig {
     pub rpc_endpoints: HashMap<String, String>,
@@ -54,11 +63,13 @@ impl GuardianConfig {
     ///
     /// # Errors
     ///
-    /// Returns `InvalidConfig` for every missing, malformed, unsafe, or
-    /// internally inconsistent value.
+    /// Uses the documented devnet-only policy when the host injects no plugin
+    /// configuration. Returns `InvalidConfig` for malformed, unsafe, or
+    /// internally inconsistent supplied values.
     #[allow(clippy::too_many_lines)]
     pub fn parse(values: &HashMap<String, String>) -> Result<Self, GuardianError> {
-        let rpc_endpoints: HashMap<String, String> = json_required(values, "rpc_endpoints_json")?;
+        let rpc_endpoints: HashMap<String, String> =
+            json_with_default(values, "rpc_endpoints_json", DEFAULT_RPC_ENDPOINTS_JSON)?;
         if rpc_endpoints.is_empty() {
             return Err(GuardianError::invalid_config(
                 "rpc_endpoints_json must not be empty",
@@ -69,7 +80,11 @@ impl GuardianConfig {
             validate_endpoint(endpoint)?;
         }
 
-        let allowed_clusters: Vec<String> = json_required(values, "allowed_clusters_json")?;
+        let allowed_clusters: Vec<String> = json_with_default(
+            values,
+            "allowed_clusters_json",
+            DEFAULT_ALLOWED_CLUSTERS_JSON,
+        )?;
         if allowed_clusters.is_empty() {
             return Err(GuardianError::invalid_config(
                 "allowed_clusters_json must not be empty",
@@ -105,10 +120,34 @@ impl GuardianConfig {
         }
 
         let limits = Limits {
-            max_rpc_calls: number(values, "max_rpc_calls", 1, 64)?,
-            max_http_response_bytes: number(values, "max_http_response_bytes", 1_024, 16_777_216)?,
-            max_transaction_bytes: number(values, "max_transaction_bytes", 1, 16_384)?,
-            max_output_bytes: number(values, "max_output_bytes", 1_024, 1_048_576)?,
+            max_rpc_calls: number_with_default(
+                values,
+                "max_rpc_calls",
+                1,
+                64,
+                DEFAULT_MAX_RPC_CALLS,
+            )?,
+            max_http_response_bytes: number_with_default(
+                values,
+                "max_http_response_bytes",
+                1_024,
+                16_777_216,
+                DEFAULT_MAX_HTTP_RESPONSE_BYTES,
+            )?,
+            max_transaction_bytes: number_with_default(
+                values,
+                "max_transaction_bytes",
+                1,
+                16_384,
+                DEFAULT_MAX_TRANSACTION_BYTES,
+            )?,
+            max_output_bytes: number_with_default(
+                values,
+                "max_output_bytes",
+                1_024,
+                1_048_576,
+                DEFAULT_MAX_OUTPUT_BYTES,
+            )?,
             max_accounts: 512,
             max_instructions: 256,
         };
@@ -178,8 +217,16 @@ impl GuardianConfig {
             ));
         }
 
-        let request_timeout_ms = number(values, "request_timeout_ms", 100, 60_000)?;
-        let policy_version = required(values, "policy_version")?.to_owned();
+        let request_timeout_ms = number_with_default(
+            values,
+            "request_timeout_ms",
+            100,
+            60_000,
+            DEFAULT_REQUEST_TIMEOUT_MS,
+        )?;
+        let policy_version = values
+            .get("policy_version")
+            .map_or_else(|| DEFAULT_POLICY_VERSION.to_owned(), Clone::clone);
         if policy_version.is_empty() || policy_version.len() > 64 {
             return Err(GuardianError::invalid_config(
                 "policy_version must contain 1..=64 bytes",
@@ -191,8 +238,8 @@ impl GuardianConfig {
             allowed_clusters,
             request_timeout_ms,
             limits,
-            fail_closed: boolean(values, "fail_closed")?,
-            enable_simulation: boolean(values, "enable_simulation")?,
+            fail_closed: boolean_with_default(values, "fail_closed", true)?,
+            enable_simulation: boolean_with_default(values, "enable_simulation", true)?,
             policy_version,
             policy,
         })
@@ -206,11 +253,13 @@ fn required<'a>(values: &'a HashMap<String, String>, key: &str) -> Result<&'a st
         .ok_or_else(|| GuardianError::invalid_config(format!("missing required key {key}")))
 }
 
-fn json_required<T: for<'de> Deserialize<'de>>(
+fn json_with_default<T: for<'de> Deserialize<'de>>(
     values: &HashMap<String, String>,
     key: &str,
+    default: &str,
 ) -> Result<T, GuardianError> {
-    serde_json::from_str(required(values, key)?)
+    let value = values.get(key).map_or(default, String::as_str);
+    serde_json::from_str(value)
         .map_err(|_| GuardianError::invalid_config(format!("{key} is invalid JSON")))
 }
 
@@ -247,6 +296,23 @@ where
     Ok(value)
 }
 
+fn number_with_default<T>(
+    values: &HashMap<String, String>,
+    key: &str,
+    min: T,
+    max: T,
+    default: T,
+) -> Result<T, GuardianError>
+where
+    T: Copy + Ord + std::str::FromStr,
+{
+    if values.contains_key(key) {
+        number(values, key, min, max)
+    } else {
+        Ok(default)
+    }
+}
+
 fn optional_number(
     values: &HashMap<String, String>,
     key: &str,
@@ -263,6 +329,18 @@ fn boolean(values: &HashMap<String, String>, key: &str) -> Result<bool, Guardian
     required(values, key)?
         .parse()
         .map_err(|_| GuardianError::invalid_config(format!("{key} must be true or false")))
+}
+
+fn boolean_with_default(
+    values: &HashMap<String, String>,
+    key: &str,
+    default: bool,
+) -> Result<bool, GuardianError> {
+    if values.contains_key(key) {
+        boolean(values, key)
+    } else {
+        Ok(default)
+    }
 }
 
 fn effect(
@@ -326,6 +404,8 @@ pub(crate) fn valid_test_config() -> HashMap<String, String> {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::HashMap;
+
     use super::{GuardianConfig, valid_test_config};
 
     #[test]
@@ -334,10 +414,10 @@ mod tests {
     }
 
     #[test]
-    fn rejects_missing_mandatory_value() {
+    fn uses_default_for_absent_required_value() {
         let mut values = valid_test_config();
         values.remove("fail_closed");
-        assert!(GuardianConfig::parse(&values).is_err());
+        assert!(GuardianConfig::parse(&values).is_ok());
     }
 
     #[test]
@@ -348,5 +428,23 @@ mod tests {
             r#"{"devnet":"http://example.com"}"#.to_owned(),
         );
         assert!(GuardianConfig::parse(&values).is_err());
+    }
+
+    #[test]
+    fn uses_safe_devnet_defaults_without_host_configuration() {
+        let values = HashMap::default();
+        let config = match GuardianConfig::parse(&values) {
+            Ok(config) => config,
+            Err(error) => panic!("default configuration must parse: {error}"),
+        };
+
+        assert_eq!(
+            config.rpc_endpoints.get("devnet").map(String::as_str),
+            Some("https://api.devnet.solana.com")
+        );
+        assert!(config.allowed_clusters.contains("devnet"));
+        assert!(config.fail_closed);
+        assert!(config.enable_simulation);
+        assert_eq!(config.limits.max_rpc_calls, 6);
     }
 }
