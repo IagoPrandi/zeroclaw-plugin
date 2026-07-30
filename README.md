@@ -49,7 +49,7 @@ User
   -> ZeroClaw v0.8.3
      -> user's configured model/provider
         -> solana_transaction_guardian (WASM)
-           -> safe devnet RPC default or operator-configured Solana RPC
+           -> safe mainnet/devnet RPC defaults or operator-configured Solana RPC
            -> deterministic report
         -> faithful presentation of that report
 ```

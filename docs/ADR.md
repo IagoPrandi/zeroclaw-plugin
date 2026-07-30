@@ -80,8 +80,8 @@ reproducible demonstration and behavior-test environment. It is not a product
 prerequisite and does not prevent users from choosing another compatible
 ZeroClaw model/provider.
 
-An empty Guardian configuration now has an explicit fail-closed devnet policy:
-the official devnet RPC, simulation, bounded requests, and conservative
-unknown-program/coverage effects. Mainnet, private RPC endpoints, and custom
-policy remain explicit operator choices. Supplied configuration continues to
-fail validation when malformed or unsafe.
+An empty Guardian configuration now has an explicit fail-closed mainnet/devnet
+policy: the official RPCs, simulation, bounded requests, and conservative
+unknown-program/coverage effects. Private RPC endpoints and custom policy
+remain explicit operator choices. Supplied configuration continues to fail
+validation when malformed or unsafe.

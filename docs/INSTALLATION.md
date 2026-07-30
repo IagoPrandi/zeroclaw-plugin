@@ -30,9 +30,10 @@ and confirms that ZeroClaw can inspect the installed plugin. It never changes
 the model provider, agent identity, prompt, credentials, or policy already in
 the user's profile.
 
-With no Guardian configuration, the plugin is ready for devnet analysis using
-the official Solana devnet RPC and a fail-closed policy. Ask the existing agent
-to analyze a serialized devnet transaction or a confirmed devnet signature.
+With no Guardian configuration, the plugin is ready for mainnet and devnet
+analysis using the official Solana RPCs and a fail-closed policy. Ask the
+existing agent to analyze a serialized transaction or a confirmed signature
+with the appropriate `cluster` alias.
 
 ## Strict plugin signatures
 
@@ -44,9 +45,9 @@ release manifest. The public key is not a secret.
 
 ## Optional configuration
 
-No plugin configuration is required for the devnet default. Use
-[CONFIGURATION.md](CONFIGURATION.md) only when you need mainnet, a private RPC
-endpoint, a different policy, or lower resource limits. Add the relevant
+No plugin configuration is required for the mainnet/devnet defaults. Use
+[CONFIGURATION.md](CONFIGURATION.md) only when you need a private RPC endpoint,
+a different policy, or lower resource limits. Add the relevant
 `[plugins]` sections to the existing profile; do not replace the user's whole
 `config.toml` and do not add a second model provider just for Guardian.
 

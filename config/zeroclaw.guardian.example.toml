@@ -2,9 +2,9 @@
 #
 # This file deliberately does not define an LLM provider, model, or agent.
 # Install the plugin into the ZeroClaw profile you already use; it will use that
-# agent's existing model. With no entry below, Guardian uses its safe devnet-only
-# defaults. Add this entry only to select a custom RPC endpoint, mainnet, or an
-# operator policy.
+# agent's existing model. With no entry below, Guardian uses its safe mainnet
+# and devnet defaults. Add this entry only to select a custom RPC endpoint or
+# an operator policy.
 
 [plugins]
 enabled = true
@@ -18,8 +18,8 @@ trusted_publisher_keys = ["d743b2cd62da45564844b273760776c076642cec487700fdedfc6
 name = "solana-transaction-guardian"
 
 [plugins.entries.config]
-rpc_endpoints_json = "{\"devnet\":\"https://api.devnet.solana.com\"}"
-allowed_clusters_json = "[\"devnet\"]"
+rpc_endpoints_json = "{\"mainnet-beta\":\"https://api.mainnet-beta.solana.com\",\"devnet\":\"https://api.devnet.solana.com\"}"
+allowed_clusters_json = "[\"mainnet-beta\",\"devnet\"]"
 request_timeout_ms = "5000"
 max_rpc_calls = "6"
 max_http_response_bytes = "2097152"

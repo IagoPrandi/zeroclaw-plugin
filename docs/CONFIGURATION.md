@@ -5,14 +5,14 @@ the agent already selected by the operator, regardless of its provider or
 model. The plugin receives only its own optional configuration under
 `[[plugins.entries]].config`.
 
-## Zero-config default
+## Zero-config defaults
 
 An installed Guardian with no `plugins.entries` configuration uses this
 explicit, safe baseline:
 
 | Setting | Default |
 |---|---|
-| Cluster and RPC | `devnet` via `https://api.devnet.solana.com` |
+| Clusters and RPCs | `mainnet-beta` via `https://api.mainnet-beta.solana.com`; `devnet` via `https://api.devnet.solana.com` |
 | Fail-closed | `true` |
 | Candidate simulation | enabled |
 | RPC timeout | 5,000 ms |
@@ -46,7 +46,8 @@ validated.
 | `enable_simulation` | boolean |
 | `policy_version` | 1–64 bytes |
 
-Mainnet is opt-in. Add an HTTPS endpoint and list `mainnet-beta` explicitly:
+Mainnet is enabled by default. Replace the public endpoint only when an
+operator needs a private RPC or stronger availability guarantees:
 
 ```toml
 [plugins.entries.config]

@@ -514,3 +514,14 @@ M0 is complete. M1 started only after all G0 validations passed.
 - M9.5 is complete. A new signed release was intentionally not fabricated:
   its version, manifest signature, checksums, and publication require the
   operator's release authority.
+
+## 2026-07-30 — Zero-config mainnet read access
+
+- Reopened `PRD.md` and the local skill inventory before changing the default
+  network policy.
+- Enabled the official `mainnet-beta` RPC alongside devnet for an empty
+  Guardian configuration. The plugin remains read-only, bounded, and
+  fail-closed; users still cannot supply an arbitrary RPC URL in tool input.
+- Kept private RPC endpoints and policy changes opt-in, updated the example
+  configuration and onboarding documentation, and added an assertion for the
+  mainnet default endpoint/allow-list entry.

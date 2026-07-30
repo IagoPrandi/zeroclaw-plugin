@@ -8,6 +8,7 @@ All notable changes follow semantic versioning.
   user; Ollama/Qwen remains reference evidence only.
 - Added explicit, fail-closed devnet defaults so a plugin entry is not needed
   for first use.
+- Enabled read-only `mainnet-beta` analysis in the same zero-config baseline.
 - Added a PowerShell package installer that preserves an existing ZeroClaw
   profile and model choice, plus installer coverage.
 - Reworked installation and configuration guidance around zero-config devnet

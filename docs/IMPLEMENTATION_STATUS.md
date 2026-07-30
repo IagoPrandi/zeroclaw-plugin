@@ -3,9 +3,8 @@
 - Current milestone: M9 — Documentation, demonstration, and submission.
 - Current submilestone: M9.4 authenticated showcase/submission; M9.5 user
   onboarding is complete.
-- Last completed task: removed the Ollama/Qwen product dependency, added safe
-  zero-config devnet defaults and a package installer that preserves the
-  user's existing ZeroClaw model/provider.
+- Last completed task: enabled zero-config read-only mainnet and devnet
+  defaults, while preserving the user's existing ZeroClaw model/provider.
 - Next executable task: create a new signed release for the M9.5 changes, then
   post the prepared showcase in the ZeroClaw Discord `#solana-bounty` channel.
 - Blocker: the showcase requires the operator's authenticated Discord account;
@@ -20,7 +19,7 @@
 - Last commands executed: regenerated the walkthrough, inspected representative
   frames, calculated its SHA-256, uploaded it to the public GitHub release,
   and matched the release API digest with the local artifact.
-- Test status: 61 native tests pass, including zero-config regression,
+- Test status: 61 native tests pass, including mainnet/devnet zero-config regression,
   arbitrary-wire property tests, schema/golden contract checks, and RPC-backed
   v0/ALT lookup reuse; strict Clippy and the PowerShell installer test pass in
   the pinned Rust 1.96.1 Linux container.

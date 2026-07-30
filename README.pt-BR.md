@@ -50,7 +50,7 @@ Usuário
   -> ZeroClaw v0.8.3
      -> modelo/provider configurado pelo usuário
         -> solana_transaction_guardian (WASM)
-           -> RPC Solana devnet padrão ou configurado pelo operador
+           -> RPC Solana mainnet/devnet padrão ou configurado pelo operador
            -> relatório determinístico
         -> apresentação fiel do relatório
 ```

@@ -116,8 +116,8 @@ try {
     }
 
     Write-Host 'Guardian is installed. It uses your current ZeroClaw agent and model.' -ForegroundColor Green
-    Write-Host 'No Ollama setup or plugin configuration is needed for the safe devnet default.'
-    Write-Host 'For mainnet, a private RPC, or custom policy, use config/zeroclaw.guardian.example.toml.'
+    Write-Host 'No Ollama setup or plugin configuration is needed for the safe mainnet/devnet defaults.'
+    Write-Host 'For a private RPC or custom policy, use config/zeroclaw.guardian.example.toml.'
 } finally {
     if ($temporaryPluginDirectory) {
         Remove-Item -LiteralPath $temporaryPluginDirectory -Recurse -Force -ErrorAction SilentlyContinue

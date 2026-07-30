@@ -4,8 +4,8 @@ use serde::Deserialize;
 
 use crate::{address::Address32, error::GuardianError, limits::Limits};
 
-const DEFAULT_RPC_ENDPOINTS_JSON: &str = r#"{"devnet":"https://api.devnet.solana.com"}"#;
-const DEFAULT_ALLOWED_CLUSTERS_JSON: &str = r#"["devnet"]"#;
+const DEFAULT_RPC_ENDPOINTS_JSON: &str = r#"{"mainnet-beta":"https://api.mainnet-beta.solana.com","devnet":"https://api.devnet.solana.com"}"#;
+const DEFAULT_ALLOWED_CLUSTERS_JSON: &str = r#"["mainnet-beta","devnet"]"#;
 const DEFAULT_REQUEST_TIMEOUT_MS: u64 = 5_000;
 const DEFAULT_MAX_RPC_CALLS: u16 = 6;
 const DEFAULT_MAX_HTTP_RESPONSE_BYTES: usize = 2_097_152;
@@ -63,7 +63,7 @@ impl GuardianConfig {
     ///
     /// # Errors
     ///
-    /// Uses the documented devnet-only policy when the host injects no plugin
+    /// Uses the documented mainnet/devnet policy when the host injects no plugin
     /// configuration. Returns `InvalidConfig` for malformed, unsafe, or
     /// internally inconsistent supplied values.
     #[allow(clippy::too_many_lines)]
@@ -431,7 +431,7 @@ mod tests {
     }
 
     #[test]
-    fn uses_safe_devnet_defaults_without_host_configuration() {
+    fn uses_safe_mainnet_and_devnet_defaults_without_host_configuration() {
         let values = HashMap::default();
         let config = match GuardianConfig::parse(&values) {
             Ok(config) => config,
@@ -442,7 +442,12 @@ mod tests {
             config.rpc_endpoints.get("devnet").map(String::as_str),
             Some("https://api.devnet.solana.com")
         );
+        assert_eq!(
+            config.rpc_endpoints.get("mainnet-beta").map(String::as_str),
+            Some("https://api.mainnet-beta.solana.com")
+        );
         assert!(config.allowed_clusters.contains("devnet"));
+        assert!(config.allowed_clusters.contains("mainnet-beta"));
         assert!(config.fail_closed);
         assert!(config.enable_simulation);
         assert_eq!(config.limits.max_rpc_calls, 6);
