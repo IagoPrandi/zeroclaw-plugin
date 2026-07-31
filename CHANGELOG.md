@@ -13,6 +13,9 @@ All notable changes follow semantic versioning.
   profile and model choice, plus installer coverage.
 - Reworked installation and configuration guidance around zero-config devnet
   use and opt-in mainnet/RPC/policy customization.
+- Documented the complete v0.1.0 acquisition, checksum verification, native
+  ZeroClaw installation, activation, and inspection flow; the release archive
+  does not include the later installer script.
 
 ## 0.1.0 - 2026-07-29
 

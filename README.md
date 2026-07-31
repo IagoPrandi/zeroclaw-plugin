@@ -61,16 +61,38 @@ reproducible reference environment only; it is not a prerequisite. See
 ## Quick start
 
 Prerequisites: a working ZeroClaw profile with the model/provider of the
-user's choice, plus a compatible Guardian release archive. Extract the
-archive and run its installer:
+user's choice, and a ZeroClaw build that includes the WASM plugin host. Confirm
+the latter before downloading the plugin:
 
 ```powershell
-.\solana-transaction-guardian-<VERSION>\install-guardian.ps1 `
-  -PluginPath .\solana-transaction-guardian-<VERSION>
+zeroclaw plugin --help
 ```
 
+Download the release archive, verify its SHA-256, extract it, enable plugins,
+and install the extracted plugin directory. These commands are for the current
+`v0.1.0` release:
+
+```powershell
+Invoke-WebRequest `
+  -Uri "https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip" `
+  -OutFile .\solana-transaction-guardian-0.1.0.zip
+
+Get-FileHash .\solana-transaction-guardian-0.1.0.zip -Algorithm SHA256
+# Expected: 70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b
+
+Expand-Archive .\solana-transaction-guardian-0.1.0.zip -DestinationPath .
+zeroclaw config set plugins.enabled true
+zeroclaw plugin install .\solana-transaction-guardian-0.1.0
+zeroclaw plugin info solana-transaction-guardian
+```
+
+`plugin info` confirms that the tool is available to the agent in that
+ZeroClaw profile. The v0.1.0 archive does not contain `install-guardian.ps1`;
+install it with the native `zeroclaw plugin install` command shown above.
+
 No LLM configuration, prompt copy, or Guardian profile is needed. The default
-is ready for fail-closed devnet analysis. Then ask the user's existing agent:
+is ready for fail-closed mainnet/devnet analysis. Then ask the user's existing
+agent:
 
 ```bash
 zeroclaw agent --agent <your-agent> \
@@ -78,7 +100,7 @@ zeroclaw agent --agent <your-agent> \
 ```
 
 Use the full [installation guide](docs/INSTALLATION.md) for strict signatures,
-source builds, and profile paths. Mainnet, private RPCs, and custom policies
+source builds, and alternate profile paths. Private RPCs and custom policies
 are opt-in and documented in [docs/CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Tool input

@@ -525,3 +525,21 @@ M0 is complete. M1 started only after all G0 validations passed.
 - Kept private RPC endpoints and policy changes opt-in, updated the example
   configuration and onboarding documentation, and added an assertion for the
   mainnet default endpoint/allow-list entry.
+
+## 2026-07-30 — Installer audit
+
+- Reopened the required `PRD.md` and compared the installation guide with the
+  published v0.1.0 release archive.
+- Found that the published v0.1.0 ZIP lacks `install-guardian.ps1`, although
+  the guide invokes it; this makes the documented installer command fail.
+
+## 2026-07-30 — Release acquisition and ZeroClaw installation guidance
+
+- Opened the required `PRD.md`, reviewed the local release-management skill,
+  and verified the published release layout against ZeroClaw's plugin protocol.
+- Updated English and Brazilian Portuguese quick starts plus the installation,
+  release, changelog, and PRD documentation. They now show acquisition,
+  SHA-256 verification, extraction, plugin enablement, native installation,
+  inspection, strict-signature setup, and alternate-profile use.
+- Recorded that v0.1.0 predates the repository installer script, so users must
+  install its extracted directory with `zeroclaw plugin install`.

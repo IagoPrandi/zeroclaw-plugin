@@ -62,17 +62,38 @@ somente o ambiente de referência reproduzível; não é um pré-requisito. Veja
 ## Início rápido
 
 Pré-requisitos: um perfil ZeroClaw funcional com o modelo/provider escolhido
-pelo usuário e uma release compatível do Guardian. Extraia o arquivo e rode o
-instalador incluído:
+pelo usuário e um build do ZeroClaw que inclua o host de plugins WASM. Confirme
+isso antes de baixar o plugin:
 
 ```powershell
-.\solana-transaction-guardian-<VERSION>\install-guardian.ps1 `
-  -PluginPath .\solana-transaction-guardian-<VERSION>
+zeroclaw plugin --help
 ```
 
+Baixe a release, verifique o SHA-256, extraia o arquivo, habilite plugins e
+instale o diretório extraído. Estes comandos correspondem à release atual
+`v0.1.0`:
+
+```powershell
+Invoke-WebRequest `
+  -Uri "https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/solana-transaction-guardian-0.1.0.zip" `
+  -OutFile .\solana-transaction-guardian-0.1.0.zip
+
+Get-FileHash .\solana-transaction-guardian-0.1.0.zip -Algorithm SHA256
+# Esperado: 70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b
+
+Expand-Archive .\solana-transaction-guardian-0.1.0.zip -DestinationPath .
+zeroclaw config set plugins.enabled true
+zeroclaw plugin install .\solana-transaction-guardian-0.1.0
+zeroclaw plugin info solana-transaction-guardian
+```
+
+`plugin info` confirma que o tool está disponível ao agente nesse perfil do
+ZeroClaw. O arquivo da v0.1.0 não inclui `install-guardian.ps1`; use o comando
+nativo `zeroclaw plugin install` mostrado acima.
+
 Não é necessário configurar LLM, copiar prompt ou criar perfil Guardian. O
-padrão está pronto para análise devnet fail-closed. Em seguida, use o agente
-que o usuário já possui:
+padrão está pronto para análise mainnet/devnet fail-closed. Em seguida, use o
+agente que o usuário já possui:
 
 ```bash
 zeroclaw agent --agent <seu-agente> \
@@ -80,8 +101,8 @@ zeroclaw agent --agent <seu-agente> \
 ```
 
 O [guia de instalação](docs/INSTALLATION.md) inclui assinaturas strict, build
-do source e perfis alternativos. Mainnet, RPC privado e políticas
-personalizadas são opt-in e estão em
+do source e perfis alternativos. RPC privado e políticas personalizadas são
+opt-in e estão em
 [CONFIGURATION.md](docs/CONFIGURATION.md).
 
 ## Segurança e evidências

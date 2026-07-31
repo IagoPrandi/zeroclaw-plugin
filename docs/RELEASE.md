@@ -82,6 +82,12 @@ list is empty.
 Public release:
 <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
 
+The v0.1.0 archive is installed by extracting it and running ZeroClaw's native
+`zeroclaw plugin install <extracted-directory>` command. It predates the
+repository's later `scripts/install-guardian.ps1`, so that script is not an
+asset in this published archive. The current user instructions are in
+[INSTALLATION.md](INSTALLATION.md).
+
 Public walkthrough:
 <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4>
 
