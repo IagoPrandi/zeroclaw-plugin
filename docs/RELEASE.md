@@ -39,13 +39,13 @@ sha256  70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b
 The same values are recorded in the package `SHA256SUMS` and must be copied to
 the GitHub release notes without modification.
 
-The separate public-demo asset is deterministic:
+The separate public-demo asset is:
 
 ```text
 file      guardian-demo.mp4
-duration  158 seconds
-size      1333678 bytes
-sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
+duration  129.3 seconds
+size      8445979 bytes
+sha256    5a591d9e1738f74ba7e3635d8a0b42bbcb6f19c78851938a5292fbb0230cb909
 ```
 
 The recommended public walkthrough is a readable phone-and-terminal
@@ -76,8 +76,8 @@ list is empty.
 - All four demo fixtures pass through the actual pinned host.
 - The recommended walkthrough is H.264, 1920x1080, 2:46, visually reviewed
   across `allow`, `block`, and final-evidence scenes.
-- The sanitized terminal demo is H.264, 1600×900, 2:38, visually reviewed,
-  and reproduced byte-identically in two renders.
+- The current `guardian-demo.mp4` release asset is H.264, 1920x1080, 2:09,
+  and its GitHub asset digest matches the local file.
 
 Public release:
 <https://github.com/IagoPrandi/zeroclaw-plugin/releases/tag/v0.1.0>
@@ -93,13 +93,15 @@ Public walkthrough:
 
 ## Public download verification
 
-On 2026-07-29, all five assets were downloaded from the public GitHub release
-into a new empty directory. Their byte counts and SHA-256 values matched the
-local validated artifacts and GitHub's asset metadata exactly:
+On 2026-07-29, the five original package assets were downloaded from the
+public GitHub release into a new empty directory. Their byte counts and
+SHA-256 values matched the local validated artifacts and GitHub's asset
+metadata exactly. `guardian-demo.mp4` was replaced on 2026-07-30; its current
+metadata is recorded below:
 
 | Asset | Bytes | SHA-256 |
 |---|---:|---|
-| `guardian-demo.mp4` | 1,333,678 | `1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828` |
+| `guardian-demo.mp4` | 8,445,979 | `5a591d9e1738f74ba7e3635d8a0b42bbcb6f19c78851938a5292fbb0230cb909` |
 | `manifest.toml` | 496 | `7d63a15745596e7373189bd0792a6e6de03247427cb2a8a63048997a16be5b26` |
 | `SHA256SUMS` | 203 | `697afa92adeb31fd760ceda9524857f5c4dcedddf5bd882b4f4ba1396ef8ae62` |
 | `solana-transaction-guardian-0.1.0.zip` | 253,346 | `70a3ac35eb34850cddb5dd745be216278d0d0278924697dcb4e3e6d49cea1b3b` |

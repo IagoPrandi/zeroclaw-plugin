@@ -61,21 +61,23 @@ No private key, seed, signing path, or cloud LLM provider was involved.
 
 ## Demo artifact
 
-The final terminal demo uses a real clean-profile Qwen/ZeroClaw transcript and
-actual host fixture results. Idle local inference is explicitly removed with
-a labeled jump cut; no desktop, private window, secret, or raw transaction is
-captured.
+The original terminal demo used a real clean-profile Qwen/ZeroClaw transcript
+and actual host fixture results. Idle local inference was explicitly removed
+with a labeled jump cut; no desktop, private window, secret, or raw transaction
+was captured. The current release asset was replaced on 2026-07-30; the
+original render-specific review evidence below is retained as historical
+provenance only.
 
 ```text
 file      guardian-demo.mp4
-duration  158 seconds
-format    H.264, 1600x900, yuv420p
-size      1333678 bytes
-sha256    1e3652197c3c3ae80c0911d626d1f102ff70b2e806fa6e17d3c17ccb3cd05828
+duration  129.3 seconds
+format    H.264, 1920x1080
+size      8445979 bytes
+sha256    5a591d9e1738f74ba7e3635d8a0b42bbcb6f19c78851938a5292fbb0230cb909
 ```
 
-Five representative frames were visually reviewed for readability and
-content. A second render was byte-identical.
+Five representative frames of the original render were visually reviewed for
+readability and content. A second original render was byte-identical.
 
 ## Public release verification
 
@@ -87,8 +89,8 @@ The separate public demo is available at:
 
 <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo.mp4>
 
-All five release assets were downloaded from GitHub into a new empty
-directory. The downloaded byte counts and SHA-256 values matched the local
-validated files and GitHub asset metadata exactly. The public repository,
-release page, and all direct asset URLs returned HTTP 200 without
-authentication.
+The five original release assets were downloaded from GitHub into a new empty
+directory. On 2026-07-30, `guardian-demo.mp4` was replaced; GitHub's current
+asset metadata reports the same byte count and SHA-256 as the local replacement
+file. The public repository, release page, and direct asset URLs returned HTTP
+200 without authentication.

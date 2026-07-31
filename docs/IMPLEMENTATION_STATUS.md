@@ -16,9 +16,9 @@
   <https://github.com/IagoPrandi/zeroclaw-plugin/releases/download/v0.1.0/guardian-demo-walkthrough.mp4>.
 - Stable release tag: `v0.1.0` at
   `e138f2d2b1547a72343f51a2fa5305956565458c`.
-- Last commands executed: regenerated the walkthrough, inspected representative
-  frames, calculated its SHA-256, uploaded it to the public GitHub release,
-  and matched the release API digest with the local artifact.
+- Last commands executed: replaced the public `guardian-demo.mp4` release
+  asset, calculated its SHA-256, and matched GitHub's release API digest with
+  the local artifact.
 - Test status: 61 native tests pass, including mainnet/devnet zero-config regression,
   arbitrary-wire property tests, schema/golden contract checks, and RPC-backed
   v0/ALT lookup reuse; strict Clippy and the PowerShell installer test pass in

@@ -543,3 +543,15 @@ M0 is complete. M1 started only after all G0 validations passed.
   inspection, strict-signature setup, and alternate-profile use.
 - Recorded that v0.1.0 predates the repository installer script, so users must
   install its extracted directory with `zeroclaw plugin install`.
+
+## 2026-07-30 — Public demo asset replacement
+
+- Opened the required `PRD.md`, the local `.claude/skills` inventory, and the
+  applicable release-management and GitHub guidance before working.
+- Replaced the `guardian-demo.mp4` asset on the public `v0.1.0` GitHub release
+  with the provided `guardian-demo.mp4`.
+- Verified the uploaded H.264 1920x1080, 129.3-second file against GitHub's
+  release API metadata: 8,445,979 bytes and SHA-256
+  `5a591d9e1738f74ba7e3635d8a0b42bbcb6f19c78851938a5292fbb0230cb909`.
+- Updated the release record and runtime evidence to retain the current
+  release-asset hash.
