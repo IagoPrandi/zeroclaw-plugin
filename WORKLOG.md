@@ -1,5 +1,13 @@
 # Worklog
 
+## 2026-07-31 — ZeroClaw availability check
+
+- Opened `PRD.md`, inspected the repository's local skills, and checked the
+  current PATH for the `zeroclaw` command.
+- ZeroClaw is not currently installed or exposed on PATH in this environment;
+  `docs/INSTALLATION.md` remains the documented onboarding path before plugin
+  installation and testing.
+
 ## 2026-07-27 — M0 discovery baseline
 
 - Opened and read `PRD.md` in full before implementation.
